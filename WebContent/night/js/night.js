@@ -581,6 +581,11 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 					//We select the first of the list as default value
 					$gloriaAPI.setParameterTreeValue($scope.rid,'fw','selected',listFilters.filters[0],function(success){
 						$scope.filter = $scope.filters_0[0];
+						$gloriaAPI.executeOperation($scope.rid,'select_filter', function(success){
+							
+						}, function(dataError, statusError){
+
+						});
 					}, function(error){
 						
 					});
@@ -599,8 +604,12 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 	
 	
 	$scope.setFilter = function(){
-		$gloriaAPI.setParameterTreeValue($scope.requestRid,'fw','selected',$scope.filter,function(success){
-			
+		$gloriaAPI.setParameterTreeValue($scope.rid,'fw','selected',$scope.filter,function(success){
+			$gloriaAPI.executeOperation($scope.rid,'select_filter', function(success){
+				
+			}, function(dataError, statusError){
+
+			});
 		}, function(error){
 			
 		});
