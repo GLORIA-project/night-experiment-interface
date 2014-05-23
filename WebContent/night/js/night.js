@@ -85,20 +85,28 @@ function InitDevices($gloriaAPI, $sequenceFactory, $scope){
 
 function FocuserCtrl($gloriaAPI, $scope){
 	
-	//Read the initial position of the focuser
-	$gloriaAPI.getParameterTreeValue($scope.requestRid,'focuser','position',function(success){
-		console.log("Initial position:"+success);
-		if (success != ""){
-			$( "#focuserPosition" ).text(success);
-			$("#focuser_slider").slider("value",success );
-			$scope.currentFocuserPosition = success;
+	$scope.$watch('rid', function(){
+		//Calculate range of the focuser
+		$gloriaAPI.executeOperation($scope.rid,'get_focuser_range', function(success){
 			
-			var angle = (success*18)/100;
-		     var rotate = 'rotate(' +angle + 'deg)';
-		     $('#focus_marker').css({'-moz-transform': rotate, 'transform' : rotate, '-webkit-transform': rotate, '-ms-transform': rotate});
-		}
-	}, function(dataError,statusError){
-		alert(statusError);
+		}, function(error){
+			
+		});
+		//Read the initial position of the focuser
+		$gloriaAPI.getParameterTreeValue($scope.rid,'focuser','position',function(success){
+			console.log("Initial position:"+success);
+			if (success != ""){
+				$( "#focuserPosition" ).text(success);
+				$("#focuser_slider").slider("value",success );
+				$scope.currentFocuserPosition = success;
+				
+				var angle = (success*18)/100;
+			     var rotate = 'rotate(' +angle + 'deg)';
+			     $('#focus_marker').css({'-moz-transform': rotate, 'transform' : rotate, '-webkit-transform': rotate, '-ms-transform': rotate});
+			}
+		}, function(dataError,statusError){
+			//alert(statusError);
+		});
 	});
 	
 	$scope.activate_focuser = function(){
@@ -240,7 +248,6 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 		console.log("Request movement:"+$scope.rid);
 		$gloriaAPI.executeOperation($scope.rid,'load_mount_status',function(success){
 			$gloriaAPI.getParameterTreeValue($scope.rid,'mount','status',function(success){
-				$scope.mount_alarm = false;
 				console.log("Read mount status:"+success);
 				if (success == "PARKED"){
 					$scope.status_mount = "night.mount.status.parked";
@@ -253,12 +260,10 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 				}
 				
 			}, function(error){
-				$scope.mount_alarm = true;
 				$scope.mount_alarm_message = "night.mount.messages.alarm_status";
 				$scope.mount_status = "night.mount.status.error";
 			});
 		}, function(error){
-			$scope.mount_alarm = true;
 			$scope.mount_alarm_message = "night.mount.messages.alarm_status";
 			$scope.mount_status = "night.mount.status.error";
 		});
@@ -338,6 +343,8 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 		if ($("#tags").val() == ""){	//Check if this field is empty
 			if ($scope.rah != "--" && $scope.ram != "--" && $scope.ras != "--"){
 				if ($scope.decg != "--" && $scope.decm != "--" && $scope.decs != "--"){
+					$scope.mount_sequence = $sequenceFactory.getSequence();
+					$scope.mount_alarm = false;
 					console.log("Move to coordinates:");
 						//Set radec
 						SetRADEC($gloriaAPI, $scope);
@@ -353,9 +360,10 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 				alert("Wrong ra value: [0-24]:[0-60]:[0-60]");
 			}	
 		} else {
-			
+			$scope.mount_alarm = false;
 			$scope.target_name = $("#tags").val();
 			console.log("Move to target:"+$scope.target_name);
+			$scope.mount_sequence = $sequenceFactory.getSequence();
 			//Set target name
 			SetTargetName($gloriaAPI, $scope);
 			//Execute go operation
@@ -530,6 +538,11 @@ function GoTargetName($gloriaAPI, data, $timeout){
 			data.mount_alarm = true;
 			data.mount_alarm_message = "night.mount.messages.alarm_taget";
 			data.status_main_ccd = "night.ccd.status.error";
+			data.$watch('data.mount_alarm_message', function(){
+				console.log("Pintar alarma");
+				$('#mount_budge').popover('show');	
+			});
+			
 		});
 	});
 	
@@ -590,11 +603,11 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 						
 					});
 				}, function(error){
-					//alert(error);
+					$scope.hasFilterWheel[0] = false;
 				});
 					
 			}, function(dataError, statusError){
-
+				$scope.hasFilterWheel[0] = false;
 			});
 			console.log("Finish init sequence");
 			
@@ -781,13 +794,13 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 						console.log("Alcance"+$scope.hasGain[0]);
 						if (success){
 							
-							$("#gain_slider").slider({value: $scope.gain, disabled:false});
-							//$scope.hasGain[$scope.ccd_order] = true;
+							//$("#gain_slider").slider({value: $scope.gain, disabled:false});
+							$scope.hasGain[$scope.ccd_order] = true;
 							$("#gain").val($scope.gain);
 						} else {
 							
-							$("#gain_slider").slider({value: $scope.gain, disabled:true});
-							//$scope.hasGain[$scope.ccd_order] = false;
+							//$("#gain_slider").slider({value: $scope.gain, disabled:true});
+							$scope.hasGain[$scope.ccd_order] = false;
 							$("#gain").val($scope.gain);
 						}
 					}, function(error){
@@ -929,14 +942,15 @@ function LoadCcdAttributes($gloriaAPI, data){
 
 					if (success){
 						
-						//$("#gain_slider").slider({value: data.gain, disabled:false});
-						data.hasGain[data.ccd_order] = true;
+						console.log("Gain value:"+data.gain);
 						$("#gain").val(data.gain);
+						$("#gain_slider").slider({value: data.gain});
+						data.hasGain[data.ccd_order] = true;
 					} else {
 						
 						//$("#gain_slider").slider({value: data.gain, disabled:true});
-						data.hasGain[data.ccd_order] = false;
 						$("#gain").val(data.gain);
+						data.hasGain[data.ccd_order] = false;
 					}
 				}, function(error){
 					
@@ -1019,10 +1033,10 @@ function GetFilters($gloriaAPI, $scope, cid){
 		$gloriaAPI.setParameterTreeValue($scope.reservation,'fw','selected',$scope.filter,function(success){
 			
 		}, function(error){
-			
+			$scope.hasFilterWheel[0] = false;
 		});
 	}, function(error){
-		//alert(error);
+		$scope.hasFilterWheel[0] = false;
 	});
 	
 }
