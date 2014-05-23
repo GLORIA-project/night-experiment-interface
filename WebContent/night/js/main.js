@@ -31,9 +31,9 @@ function NightMainCtrl($gloriaAPI, $scope, $timeout, $gloriaLocale,
 	console.log("Language:"+$gloriaLocale.id);
 	
 	if ($gloriaLocale.id == "es"){
-		$scope.nightQuestions = $sce.trustAsResourceUrl("http://goo.gl/S4PjxS");
+		$scope.nightQuestions = $sce.trustAsResourceUrl("https://docs.google.com/forms/d/1ys1b8EiC8COj8oBQtFQWuCE3f_J1ljZUojpVGm0TOUk/viewform");
 	} else {
-		$scope.nightQuestions = $sce.trustAsResourceUrl("http://goo.gl/Th8nmI");
+		$scope.nightQuestions = $sce.trustAsResourceUrl("https://docs.google.com/forms/d/1zFZexlvF_otlNyMCZDKXa84Ga8iodXjRm0MxLLuARlM/viewform");
 		
 	}
 	
