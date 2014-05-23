@@ -16,6 +16,10 @@
 	left: 5px;
 	width: 125px;
 }
+.popover-title{
+	background:#B94A48;
+	text-color:white;
+}
 #mount_parameters{
 	position:relative;
 	top: 10px;
@@ -117,10 +121,10 @@ a.prev span, a.next span {
 	clear: both;
 }
 #gloria_info{
-	position:relative;
-	left:180px;
-	width:530px;
-	top:-60px;
+	position:absolute;
+	left:380px;
+	width:600px;
+	top:840px;
 	display:inline;
 }
 
