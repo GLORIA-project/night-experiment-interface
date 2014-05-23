@@ -10,7 +10,7 @@
 	</div>
 </div>
 <div id="container" ng-controller="InitDevices"
-	style="background-image: url(night/img/Template.png); background-size: 940px 744px; background-repeat: no-repeat">
+	style="background-image: url(night/img/Template.png); background-size: 940px 744px; background-repeat: no-repeat; height:744px">
 	<div ng-controller="FocuserCtrl"
 		ng-init="focuserPressed=false;currentFocuserPosition=0">
 		<div id="focus_marker" tooltip="{{'night.focuser.tooltip' | i18n}}"
@@ -70,9 +70,15 @@
 			<div id="mount_target_panel">
 				<div style="display: block;">
 					<span class="title">{{'night.mount.title' | i18n}}</span> <span id="mount_budge"
-						title="{{mount_alarm_message | i18n}}"
+						data-content="{{mount_alarm_message | i18n}}"
+						data-animation="yes"
+						data-trigger="click"
+						data-placement="top"
+						data-show="500"
+						data-html="true"
+						data-title="<strong>Alert</strong><button type=&quot;button&quot; id=&quot;close&quot; class=&quot;close&quot; onclick=&quot;$('#mount_budge').popover('hide');&quot;>&times;</button>"
 						ng-style="{'opacity': mount_alarm ? 1 : 0.1}"
-						class="badge badge-important" ng-mouseleave="mount_alarm=false">0</span>
+						class="badge badge-important">0</span>
 	
 					<div id="mount_information" style="float: right;" ng-click="showInformation()">
 						<img src="night/img/information.png" />
@@ -244,7 +250,7 @@
 					</div>
 					<div id="mount_buttons_panel" style="position:absolute;bottom:-20px;right:0px">
 						<img src="night/img/telescope.png"
-							width="32px" height="32px" ng-click="go()"
+							width="40px" height="40px" ng-click="go()"
 							tooltip="Move telescope" />
 					</div>
 				</div>
@@ -304,10 +310,10 @@
 						<input type="text" id="exposure_time" ng-disabled="!hasExposition[ccd_order]" ng-blur="check_exposure_time()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
 					</div>
 				</div>
-				<div tooltip="{{'night.ccd.tooltip.gain' | i18n}}" style="margin-top:20px;">
-					<div id="gain_slider" ng-if="hasGain[ccd_order]" style="width:80px;"></div>
+				<div tooltip="{{'night.ccd.tooltip.gain' | i18n}}" ng-show="hasGain[ccd_order]" style="margin-top:20px;">
+					<div id="gain_slider" style="width:80px;"></div>
 					<div id="gain_div" style="position:absolute;top:20px;right:-5px">
-						<input type="text" id="gain" ng-disabled="!hasGain[ccd_order]" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
+						<input type="text" id="gain" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
 					</div>
 				</div>
 				<div style="margin-top:8px;margin-bottom:4px">
@@ -324,34 +330,34 @@
 						ng-class="{'mess-info':isExposing}">{{status_main_ccd |
 						i18n}}</span>
 				</div>
-				<div id="main_ccd_buttons_panel" style="position:relative;width:85px;" align="center">
+				<div id="main_ccd_buttons_panel" style="position:absolute;top:100px;width:85px;" align="center">
 					<div style="display:inline"
 						ng-class="hasVideoMode[ccd_order] ? (isExposing && 'ccd_button_disabled' || (isVideo && 'ccd_button_selected' || 'ccd_button')) : 'ccd_button_disabled'"
 						ng-click="hasVideoMode[ccd_order] && !isExposing && video()">
-						<img src="night/img/video.png" width="36px"
-							height="30px" tooltip="{{'night.ccd.messages.video_text' | i18n}}" />
+						<img src="night/img/video.png" width="40px" height="40px" 
+								tooltip="{{'night.ccd.messages.video_text' | i18n}}" />
 					</div>
 					<div id="exposure_button" style="display:inline"
 						ng-class="isExposing ? 'ccd_button_selected' : 'ccd_button'"
 						ng-click="!isExposing && expose()">
-						<img src="night/img/eye.png" width="36px"
-							height="30px" tooltip="{{'night.ccd.messages.expose_text' | i18n}}" />
+						<img src="night/img/ccd.png" width="30px" height="30px" 
+								tooltip="{{'night.ccd.messages.expose_text' | i18n}}" />
 					</div>	
 				</div>
 			</div>
 			<div id="ccd_button_1"
 				ng-class="hasCcd[1] ? ((ccd_order == 1) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
 				ng-click="hasCcd[1] && setOrder(1)"
-				style="position: relative; width: 40px; left: -600px;top:-30px"
+				style="position: absolute; width: 40px; left: -600px;top:120px"
 				tooltip="{{'night.ccd.messages.secondary_ccd' | i18n}}">
-				<img src="night/img/ccd.png" />
+				<img src="night/img/eye.png" />
 			</div>
 			<div id="ccd_button_0"
 				ng-class="hasCcd[0] ? ((ccd_order == 0) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
 				ng-click="hasCcd[0] && setOrder(0)"
-				style="position: relative; width: 54px; top: -63px; left: -100px"
+				style="position: absolute; width: 54px; top: 120px; left: -100px"
 				tooltip="{{'night.ccd.messages.main_ccd' | i18n}}">
-				<img src="night/img/main_ccd.png" />
+				<img src="night/img/eye.png" />
 			</div>
 		</div>
 	</div>
@@ -449,7 +455,7 @@
 	</div>
 
 	<div ng-controller="SolarImagesCtrl" class="span9"
-		style="height: 100px; cursor: default">
+		style="height: 100px; cursor: default;position:absolute;top:920px">
 		<div align="center">
 			<h5 class="label-info title_night" style="margin-top: 0px">Álbum</h5>
 		</div>
@@ -583,7 +589,7 @@
 		min : 0,
 		max : 120,
 		value : 0,
-		disabled:true,
+		disabled:false,
 		slide : function(event, ui) {
 			$("#exposure_time").val(ui.value);
 		}
@@ -602,5 +608,4 @@
 			gainChange = true;
 		}
 	});
-	
 </script>
