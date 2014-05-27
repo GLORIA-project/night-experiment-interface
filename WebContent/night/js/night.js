@@ -4,6 +4,7 @@ var focuserPosition=0;
 var max_ccd_timer=20;
 var num_ccd_timer=max_ccd_timer;
 
+
 function InitDevices($gloriaAPI, $sequenceFactory, $scope){
 	
 	
@@ -121,23 +122,26 @@ function FocuserCtrl($gloriaAPI, $scope){
 		var currentPositionInt = parseInt($scope.currentFocuserPosition);
 		var numSteps = newPositionInt - currentPositionInt;
 
-		$gloriaAPI.setParameterTreeValue($scope.requestRid,'focuser','position',$( "#focuserPosition" ).text(),function(success){
-			
-		}, function(error){
-			//TODO Error message
-		});
-		
-		$gloriaAPI.setParameterTreeValue($scope.requestRid,'focuser','steps',numSteps,function(success){
-			console.log("Move "+numSteps+" steps");
-			$gloriaAPI.executeOperation($scope.requestRid,'move_focus', function(success){
-				console.log("Focuser moved");
-				$scope.currentFocuserPosition = $( "#focuserPosition" ).text();
+		$scope.$watch('rid', function(){
+			$gloriaAPI.setParameterTreeValue($scope.rid,'focuser','position',$( "#focuserPosition" ).text(),function(success){
+				
 			}, function(error){
-				//alert(error);
+				//TODO Error message
 			});
 			
-		}, function(error){
-			//TODO Error message
+			$gloriaAPI.setParameterTreeValue($scope.rid,'focuser','steps',numSteps,function(success){
+				console.log("Move "+numSteps+" steps");
+				$gloriaAPI.executeOperation($scope.rid,'move_focus', function(success){
+					console.log("Focuser moved");
+					$scope.currentFocuserPosition = $( "#focuserPosition" ).text();
+				}, function(error){
+					//alert(error);
+				});
+				
+			}, function(error){
+				//TODO Error message
+			});
+			
 		});
 		
 	};
@@ -579,6 +583,7 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 		if ($scope.rid > 0){
 			console.log("Run init sequence");
 			
+//			alert($scope.$parent.login.user);
 			
 			GetNumCcds($gloriaAPI,$scope);
 			LoadCcdAttributes($gloriaAPI,$scope);
@@ -1149,6 +1154,29 @@ function exposureTimer($gloriaAPI, data, $timeout){
 			if ((success.jpg!=null) && (success.fits)!=null){
 				data.status_main_ccd = "night.ccd.status.transfering";
 				console.log("Deleting timer");
+				//Send fits url to SADIRA
+				
+				var data_json = {
+						'experimentid' : "night",
+						'experiment':"Default Night Experiment",
+						'reservationid' : data.rid,
+						'url' : success.fits,
+						'user': data.$parent.login.user
+				};
+				
+				
+				var dataJson = new FormData();
+				dataJson.append('json_header', JSON.stringify(data_json));
+				
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', 'http://sadira.iasfbo.inaf.it:9999/gloria/submit', true);
+				xhr.onload = function () {
+				    // do something to response
+				    console.log("Sadira answers : " + this.responseText);
+				};
+				xhr.send(dataJson);
+				
+				
 				//clearInterval(expTimer);
 				var mImage = new Image();
 				mImage.src = success.jpg;
