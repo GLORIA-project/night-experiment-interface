@@ -66,7 +66,7 @@
 		</div>
 	</div>
 	<div id="right_controls">
-		<div ng-controller="MountDevice" ng-init="mount_alarm=false;mount_alarm_message='night.mount.messages.no_alarm'">
+		<div ng-controller="MountDevice" ng-init="mount_alarm=false;radec_invalid=false;mount_alarm_message='night.mount.messages.no_alarm';radec_message='night.coordinates_modal.title'">
 			<div id="mount_target_panel">
 				<div style="display: block;">
 					<span class="title">{{'night.mount.title' | i18n}}</span> <span id="mount_budge"
@@ -189,29 +189,61 @@
 							<h3>{{'night.coordinates_modal.title' | i18n}}</h3>
 						</div>
 						<div class="modal-body">
-							{{'night.coordinates_modal.introduction' | i18n}}<br>
+							{{'night.coordinates_modal.introduction' | i18n}}<br><br>
 							<table>
 								<tr>
 									<td>{{'night.coordinates_modal.right_ascension' | i18n}}</td>
 									<td>
-										<select ng-model="rah_sel" ng-init="rah_sel = 0" class="selector_coordinates" ng-options="item_rah for item_rah in Range(0,24)"></select>
-										<select ng-model="ram_sel" ng-init="ram_sel = 0" class="selector_coordinates" ng-options="item_ram for item_ram in Range(0,60)"></select>
-										<select ng-model="ras_sel" ng-init="ras_sel = 0" class="selector_coordinates" ng-options="item_ras for item_ras in Range(0,60)"></select>
+										&nbsp;&nbsp;
+										<input 	ng-model="rah_sel" 
+												ng-init="rah_sel = 0;rah_valid=true" 
+												ng-style="{'border-color': rah_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="rah_valid=true;rah_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;h&nbsp;
+										<input 	ng-model="ram_sel" 
+												ng-init="ram_sel = 0;ram_valid=true" 
+												ng-style="{'border-color': ram_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="ram_valid=true;ram_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;m&nbsp;
+										<input 	ng-model="ras_sel" 
+												ng-init="ras_sel = 0.0;ras_valid=true" 
+												ng-style="{'border-color': ras_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="ras_valid=true;ras_sel=''" 
+												maxlength="4" 
+												class="coordinates_one_decimal"></input>&nbsp;s
 									</td>
 								</tr>
 								<tr>
 									<td>{{'night.coordinates_modal.declination' | i18n}}</td>
 									<td>
-										<select ng-model="decsign_sel" ng-init="decsign_sel = '+'" class="selector_coordinates" >
-											<option value="+" selected>+</option>
-											<option value="-">-</option>
-										</select>
-										<select ng-model="decg_sel" ng-init="decg_sel = 0" class="selector_coordinates" ng-options="item_decg for item_decg in Range(0,90)"></select>
-										<select ng-model="decm_sel" ng-init="decm_sel = 0" class="selector_coordinates" ng-options="item_decm for item_decm in Range(0,60)"></select>
-										<select ng-model="decs_sel" ng-init="decs_sel = 0" class="selector_coordinates" ng-options="item_decs for item_decs in Range(0,60)"></select>
+										&nbsp;&nbsp;
+										<input 	ng-model="decg_sel" 
+												ng-init="decg_sel = 0;decg_valid=true"
+												ng-style="{'border-color': decg_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decg_valid=true;decg_sel=''" 
+												maxlength="3" 
+												class="coordinates_no_decimal"></input>&nbsp;º&nbsp;
+										<input 	ng-model="decm_sel" 
+												ng-init="decm_sel = 0;decm_valid=true" 
+												ng-style="{'border-color': decm_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decm_valid=true;decm_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;'&nbsp;
+										<input 	ng-model="decs_sel" 
+												ng-init="decs_sel = 0;decs_valid=true"
+												ng-style="{'border-color': decs_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decs_valid=true;dec_sel=''"  
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;''
 									</td>
 								</tr>
 							</table>
+							<br><br>
+							<div ng-if="radec_invalid" class="alert alert-danger alert-dismissable">
+								{{radec_message | i18n}}
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-primary" ng-click="setCoordinates()">{{'night.mount.apply'
@@ -228,7 +260,7 @@
 						</tr>
 						<tr>
 							<td id="dec_coordinates">
-								{{decsign}}{{decg}} : {{decm}} : {{decs}}
+								{{decg}} : {{decm}} : {{decs}}
 							</td>
 						</tr>
 						<tr>
@@ -316,7 +348,7 @@
 						<input type="text" id="gain" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
 					</div>
 				</div>
-				<div style="margin-top:8px;margin-bottom:4px">
+				<div style="margin-top:8px;margin-bottom:4px" ng-show="hasFilterWheel[ccd_order]">
 					<select id="filter_selector" class="selector"
 							ng-model="filter" ng-change="setFilter()"
 							ng-disabled="!hasFilterWheel[ccd_order]"
@@ -325,7 +357,7 @@
 				</div>
 		
 				<div align="center" class="status" ng-model="status_main_ccd"
-					ng-init="status_main_ccd='night.ccd.status.ready'" style="position:relative;width:85px">
+					ng-init="status_main_ccd='night.ccd.status.ready'" style="position:absolute;top:80px;width:85px">
 					<span id="ccd_status" class="status_text"
 						ng-class="{'mess-info':isExposing}">{{status_main_ccd |
 						i18n}}</span>
