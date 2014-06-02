@@ -426,14 +426,69 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 	    return result;
 	};
 	$scope.setCoordinates = function(){
-		$scope.rah = $scope.rah_sel;
-		$scope.ram = $scope.ram_sel;
-		$scope.ras = $scope.ras_sel;
 		
-		$scope.decsign = $scope.decsign_sel;
-		$scope.decg = $scope.decg_sel;
-		$scope.decm = $scope.decm_sel;
-		$scope.decs = $scope.decs_sel;
+		var ra_h = parseInt($scope.rah_sel);
+		var ra_m = parseInt($scope.ram_sel);
+		var ra_s = parseFloat($scope.ras_sel);
+		
+		var dec_g = parseInt($scope.decg_sel);
+		var dec_m = parseInt($scope.decm_sel);
+		var dec_s = parseInt($scope.decs_sel);
+		
+		if ((ra_h >= 0) && (ra_h<=24)){
+			if ((ra_m >= 0) && (ra_m <= 59)){
+				if ((ra_s >= 0) && (ra_s <= 59)){
+					if ((ra_h == 24) && ((ra_m > 0) || ((ra_m == 0) && (ra_s>0)))){
+						$scope.rah_valid = false;
+						$scope.radec_invalid=true;
+						$scope.radec_message='night.coordinates_modal.invalid_ra';
+					} else {
+						if ((dec_g >= -90) && (dec_g<=90)){
+							if ((dec_m >= 0) && (dec_m <= 59)){
+								if ((dec_s >= 0) && (dec_s <= 59)){
+									
+									$scope.radec_invalid=false;
+									$scope.rah = $scope.rah_sel;
+									$scope.ram = $scope.ram_sel;
+									$scope.ras = $scope.ras_sel;
+									
+									$scope.decg = $scope.decg_sel;
+									$scope.decm = $scope.decm_sel;
+									$scope.decs = $scope.decs_sel;	
+									
+									 $('#CoordinatesModal').modal('hide');
+									 
+								} else {
+									$scope.decs_valid = false;
+									$scope.radec_invalid=true;
+									$scope.radec_message='night.coordinates_modal.invalid_dec';
+								}
+							} else {
+								$scope.decm_valid = false;
+								$scope.radec_invalid=true;
+								$scope.radec_message='night.coordinates_modal.invalid_dec';
+							}
+						} else {
+							$scope.decg_valid = false;
+							$scope.radec_invalid=true;
+							$scope.radec_message='night.coordinates_modal.invalid_dec';
+						}
+					}
+				} else {
+					$scope.ras_valid = false;
+					$scope.radec_invalid=true;
+					$scope.radec_message='night.coordinates_modal.invalid_ra';
+				}
+			} else {
+				$scope.ram_valid = false;
+				$scope.radec_invalid=true;
+				$scope.radec_message='night.coordinates_modal.invalid_ra';
+			}
+		} else {
+			$scope.rah_valid = false;
+			$scope.radec_invalid=true;
+			$scope.radec_message='night.coordinates_modal.invalid_ra';
+		}
 	};
 }
 
@@ -461,9 +516,6 @@ function SetRADEC($gloriaAPI, data){
 	var coordinates = new Object();
 	coordinates.ra = parseFloat(convertRaToDecimal(data.rah, data.ram, data.ras));
 	coordinates.dec = parseFloat(convertDecToDecimal(data.decg, data.decm,data.decs));
-	if (data.decsign == -1){
-		coordinates.dec = coordinates.dec * -1;
-	}
 	
 	return data.mount_sequence.execute(function() {
 		return $gloriaAPI.setParameterTreeValue(data.requestRid,'mount','target.coordinates',coordinates,function(success){
@@ -605,7 +657,7 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 
 						});
 					}, function(error){
-						
+						$scope.hasFilterWheel[0] = false;
 					});
 				}, function(error){
 					$scope.hasFilterWheel[0] = false;
