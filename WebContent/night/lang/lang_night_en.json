@@ -54,7 +54,8 @@
 					"alarm_status": "Problem to load mount status",
 					"info_ra" : "Put here the right ascension coordinate. Format:[0-23]:[0-59]:[0:59]. If you want to know more, click here",
 					"info_dec": "Put here the declination coordinate. Format: [-90 - 90]:[0 - 59]: [0 - 59].",
-					"info_target": "In this field, you can choose between object from messier catalog (M1, M2, etc ...), international(NGC500, etc ...) or solar system (JUPITER, SATURN, etc ...)"
+					"info_target": "In this field, you can choose between object from messier catalog (M1, M2, etc ...), international(NGC500, etc ...) or solar system (JUPITER, SATURN, etc ...)",
+					"invalid_rah": "Invalid RA value"
 				},
 				"catalog": {
 					"solar_tab": "SOLAR SYSTEM",
@@ -133,8 +134,8 @@
 	},
 	"coordinates_modal": {
 		"title": "Ventana de coordenadas",
-		"introduction": "Especifica las coordenadas del target al que quieres apuntar. Recuerda que las coordenadas deben estar en J2000",
-		"right_ascension": "Ascensión recta",
+		"introduction": "Enter the target coordinates in J2000. ",
+		"right_ascension": "Right Ascension",
 		"declination": "Declination",
 		"invalid_ra": "Invalid Right Ascension coordinate",
 		"invalid_dec": "Invalid Declination coordinate"
