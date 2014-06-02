@@ -325,6 +325,24 @@ div.ui-slider-handle{
  	-webkit-appearance: none;
  	appearance: none;
  }
+ .coordinates_no_decimal{
+ 	width:20px;
+ 	text-align:right;
+ 	background-color:#000000;
+	color: #FFFFFF;
+	border-color: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+ }
+ .coordinates_one_decimal{
+ 	width:40px;
+ 	text-align:right;
+ 	background-color:#000000;
+	color: #FFFFFF;
+	border-color: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+ }
  .ccd_button_disabled{
  	opacity:0.0;
  }
