@@ -111,7 +111,10 @@
 					"ra_alert": "Wrong ra value",
 					"info_exposition":"Select the exposure time in seconds (max. 120 seconds). The exposure time indicates the time the shutter is open.",
 					"info_filter":"Select the filter.",
-					"info_gain":"Put here the gain. Format: [0-1023]"
+					"info_gain":"Put here the gain. Format: [0-1023]",
+					"alarm_exposure": "Impossible to set exposure time, try again",
+					"alarm_gain": "Impossible to set gain, try again",
+					"alarm_url": "Impossible to generate image"
 				},
 				"tooltip":{
 					"exposure_time": "Exposure time in seconds",
@@ -124,7 +127,8 @@
 	},
 	"general": {
 		"alert":"Alert",
-		"expiration_time": "Your reservation time is close to expire"
+		"expiration_time": "Your reservation time is close to expire",
+		"information": "Tutorial"
 	},
 	"album":{
 		"taken":"You took this image at"
@@ -133,8 +137,10 @@
 		"send_image":"See my new astronomical image"
 	},
 	"coordinates_modal": {
-		"title": "Ventana de coordenadas",
-		"introduction": "Enter the target coordinates in J2000. ",
+		"title": "Coordinates",
+		"introduction": "Enter the target coordinates in J2000. Format:",
+		"ra_info": "Right ascension: Ranging from 00:00:00 to 23:59:59.9",
+		"dec_info": "Declination: Ranging from -90:00:00 to 90:00:00",
 		"right_ascension": "Right Ascension",
 		"declination": "Declination",
 		"invalid_ra": "Invalid Right Ascension coordinate",
