@@ -1,13 +1,13 @@
 /* Panels position */
 #left_controls{
 	position:relative;
-	top:250px;
+	top:200px;
 	left:40px;
 	height:270px;
 }
 #right_controls{	
 	position:relative;
-	top:-65px;
+	top:-125px;
 	left: 785px; 
 }
 #mount_target_panel{
@@ -121,11 +121,10 @@ a.prev span, a.next span {
 	clear: both;
 }
 #gloria_info{
-	position:absolute;
-	left:380px;
+	position:relative;
+	left:180px;
 	width:600px;
-	top:840px;
-	display:inline;
+	top:640px;
 }
 
 
