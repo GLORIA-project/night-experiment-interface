@@ -66,6 +66,10 @@ function NightMainCtrl($gloriaAPI, $scope, $timeout, $gloriaLocale,
 		});
 	};
 
+	$scope.activateTutorial = function(){
+		$("#TutorialModal").modal();
+	};
+	
 	$scope.onUnauth = function() {
 		$scope.$emit('unauthorized');
 	};
