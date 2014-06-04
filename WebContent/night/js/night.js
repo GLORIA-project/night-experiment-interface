@@ -172,9 +172,13 @@ function GetCamerasCtrl($gloriaAPI, $scope, $timeout){
 				$("#scam0_name").text(success.scam.images[0].name);
 				$("#scam0_img").attr("src",success.scam.images[0].url);
 				
-				$scope.scam1 = success.scam.images[1].url;
-				$("#scam1_name").text(success.scam.images[1].name);
-				$("#scam1_img").attr("src",success.scam.images[1].url);
+				if (success.scam.number == 2){
+					$scope.hasSecondaryWebcam = true;
+					$scope.scam1 = success.scam.images[1].url;
+					$("#scam1_name").text(success.scam.images[1].name);
+					$("#scam1_img").attr("src",success.scam.images[1].url);					
+				}
+				
 				
 					
 			}, function(error){
@@ -357,12 +361,8 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 						//TODO in GoRADEC function
 						$("#exposure_slider").slider({max:10,step:0.001});
 						
-					} else {
-						alert("Wrong dec value: [-90-+90]:[0-60]:[0-60]");
-					}
-			}  else {
-				alert("Wrong ra value: [0-24]:[0-60]:[0-60]");
-			}	
+					} 
+			}  
 		} else {
 			$scope.mount_alarm = false;
 			$scope.target_name = $("#tags").val();
@@ -539,6 +539,9 @@ function GoRADEC($gloriaAPI, data, $timeout){
 			data.mount_alarm = true;
 			data.mount_alarm_message = "night.mount.messages.alarm_taget";
 			data.status_main_ccd = "night.ccd.status.error";
+			data.$watch('data.mount_alarm_message', function(){
+				$('#mount_budge').popover('show');	
+			});
 		});
 	});
 	
@@ -707,16 +710,17 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 		$scope.isVideo = false;
 		if (!$scope.isExposing){
 			if (!isNaN(expTimeParameter) && (expTimeParameter>=0) && (expTimeParameter<=$scope.maxExposition[$scope.ccd_order])){
+					$scope.ccd_alarm = false;
 					$scope.ccd_sequence = $sequenceFactory.getSequence();
 					$scope.status_main_ccd = "night.ccd.status.exposing";
 					$scope.isExposing = true;
 					$scope.exposure_time[$scope.ccd_order] = $scope.exposure_time;
 					num_ccd_timer=max_ccd_timer;
 					
-					//console.log("set exposure time:"+$scope.exposure_time[$scope.ccd_order]+" "+num_ccd_timer);
+					
 					SetExposureTime($gloriaAPI, $scope);
 					
-					//console.log("set gain:"+$scope.gain);
+					
 					if ($scope.hasGain[$scope.ccd_order]){
 						console.log("set gain");
 						SetGain($gloriaAPI, $scope);
@@ -1121,6 +1125,12 @@ function SetExposureTime($gloriaAPI, data){
 				data.exposure_time = $("#exposure_time").text();
 			}, function(error){
 				data.isExposing = false;
+				data.ccd_alarm = true;
+				data.ccd_alarm_message = "night.ccd.messages.alarm_exposure";
+				data.status_main_ccd = "night.ccd.status.error";
+				data.$watch('data.ccd_alarm_message', function(){
+					$('#ccd_budge').popover('show');	
+				});
 			});
 	});
 }
@@ -1131,6 +1141,12 @@ function SetGain($gloriaAPI, data){
 				
 			}, function(error){
 				data.isExposing = false;
+				data.ccd_alarm = true;
+				data.ccd_alarm_message = "night.mount.messages.alarm_gain";
+				data.status_main_ccd = "night.ccd.status.error";
+				data.$watch('data.mount_alarm_message', function(){
+					$('#ccd_budge').popover('show');	
+				});
 			});
 	});
 }
@@ -1139,11 +1155,14 @@ function SetCCDAttributes($gloriaAPI, data){
 		return $gloriaAPI.executeOperation(data.requestRid,'set_ccd_attributes',function(success){
 				
 			}, function(error){
-				//activateCcdAlarm("Fail to connect server");
+				
 				data.ccd_alarm = true;
 				data.ccd_alarm_message = "night.ccd.messages.internal_server";
 				data.status_main_ccd = "night.ccd.status.error";
 				data.isExposing = false;
+				data.$watch('data.mount_alarm_message', function(){
+					$('#ccd_budge').popover('show');	
+				});
 			});
 	});
 }
@@ -1164,6 +1183,9 @@ function StartExposure($gloriaAPI, data, $timeout){
 				data.status_main_ccd = "night.ccd.status.error";
 				data.ccd_alarm = true;
 				data.ccd_alarm_message = "night.ccd.messages.alarm_start_exposure";
+				data.$watch('data.mount_alarm_message', function(){
+					$('#ccd_budge').popover('show');	
+				});
 			});
 	});
 }
@@ -1185,12 +1207,18 @@ function CheckInstImages($gloriaAPI, data, $timeout){
 				data.ccd_alarm_message = "night.ccd.messages.internal_server";
 				data.status_main_ccd = "night.ccd.status.error";
 				data.isExposing = false;
+				data.$watch('data.mount_alarm_message', function(){
+					$('#ccd_budge').popover('show');	
+				});
 			}
 		}, function(error){
 			data.isExposing = false;
 			data.status_main_ccd = "night.ccd.status.error";
 			data.ccd_alarm = true;
 			data.ccd_alarm_message = "night.ccd.messages.internal_server";
+			data.$watch('data.mount_alarm_message', function(){
+				$('#ccd_budge').popover('show');	
+			});
 		});
 	});
 }
@@ -1263,12 +1291,18 @@ function exposureTimer($gloriaAPI, data, $timeout){
 		}, function(error){
 			data.isExposing = false;
 			data.status_main_ccd = "night.ccd.status.error";
-			data.ccd_alarm_message = "night.ccd.messages.internal_server";
+			data.ccd_alarm_message = "night.ccd.messages.alarm_url";
+			data.$watch('data.mount_alarm_message', function(){
+				$('#ccd_budge').popover('show');	
+			});
 		});
 	}, function(error){
 		data.isExposing = false;
 		data.status_main_ccd = "night.ccd.status.error";
-		data.ccd_alarm_message = "night.ccd.messages.internal_server";
+		data.ccd_alarm_message = "night.ccd.messages.alarm_url";
+		data.$watch('data.mount_alarm_message', function(){
+			$('#ccd_budge').popover('show');	
+		});
 	});
 						
 }
@@ -1565,5 +1599,4 @@ function DomeCtrl($gloriaAPI, $scope,$timeout){
 			}
 		});
 	}
-		
 }
