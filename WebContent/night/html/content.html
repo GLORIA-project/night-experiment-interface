@@ -36,371 +36,7 @@
 		</div>
 	</div>
 
-
-	<div id="left_controls">
-		<div id="surveillance_panel" ng-controller="GetCamerasCtrl">
-			<div style="margin-top: 80px;">
-				<div style="width: 100px; text-align: center;">
-					<span id="scam0_name" class="title">SCAM 0</span>
-				</div>
-				<div class="expand" style="z-index: 500;">
-					<div class="positioner">
-						<a class="slide" aria-haspopup="true"> <img id="scam0_img"
-							src="night/img/white_noise.gif" />
-						</a>
-					</div>
-				</div>
-			</div>
-			<div style="margin-top: 80px;">
-				<div style="width: 100px; text-align: center;">
-					<span id="scam1_name" class="title">SCAM 1</span>
-				</div>
-				<div class="expand" style="z-index: 409;">
-					<div class="positioner">
-						<a class="slide" aria-haspopup="true"> <img id="scam1_img"
-							src="night/img/white_noise.gif" />
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="right_controls">
-		<div ng-controller="MountDevice" ng-init="mount_alarm=false;radec_invalid=false;mount_alarm_message='night.mount.messages.no_alarm';radec_message='night.coordinates_modal.title'">
-			<div id="mount_target_panel">
-				<div style="display: block;">
-					<span class="title">{{'night.mount.title' | i18n}}</span> <span id="mount_budge"
-						data-content="{{mount_alarm_message | i18n}}"
-						data-animation="yes"
-						data-trigger="click"
-						data-placement="top"
-						data-show="500"
-						data-html="true"
-						data-title="<strong>Alert</strong><button type=&quot;button&quot; id=&quot;close&quot; class=&quot;close&quot; onclick=&quot;$('#mount_budge').popover('hide');&quot;>&times;</button>"
-						ng-style="{'opacity': mount_alarm ? 1 : 0.1}"
-						class="badge badge-important">0</span>
-	
-					<div id="mount_information" style="float: right;" ng-click="showInformation()">
-						<img src="night/img/information.png" />
-					</div>
-				</div>
-				<div id="mount_parameters">
-					<div class="modal hide fade" id="CatalogModal">
-						<div class="modal-header">
-							<h3>Catalog</h3>
-						</div>
-						<div class="modal-body">
-							<tabset> <tab heading="{{'night.mount.catalog.solar_tab' | i18n}}">
-							<table cellspacing="10px">
-								<tr>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.mercury'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.venus'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.mars'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.jupiter'
-										| i18n}}</td>
-								</tr>
-								<tr>
-									<td height="100px"><div
-											ng-class="(target_selected == 'mercury') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('mercury')">
-											<img
-												src="night/img/catalog/mercury.jpg"
-												height="100px" />
-										</div></td>
-									<td height="100px"><div
-											ng-class="(target_selected == 'venus') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('venus')">
-											<img src="night/img/catalog/venus.jpg"
-												height="100px" />
-										</div></td>
-									<td height="100px"><div
-											ng-class="(target_selected == 'mars') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('mars')">
-											<img src="night/img/catalog/mars.jpg"
-												height="100px" />
-										</div></td>
-									<td height="100px"><div
-											ng-class="(target_selected == 'jupiter') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('jupiter')">
-											<img
-												src="night/img/catalog/jupiter.jpg"
-												height="100px" />
-										</div></td>
-								</tr>
-								<tr>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.saturn'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.neptune'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.uranus'
-										| i18n}}</td>
-									<td height="20px" class="catalog_title">{{'night.mount.catalog.moon'
-										| i18n}}</td>
-								</tr>
-								<tr>
-									<td height="20px"><div
-											ng-class="(target_selected == 'saturn') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('saturn')">
-											<img
-												src="night/img/catalog/saturn.jpg"
-												height="100px" />
-										</div></td>
-									<td height="20px"><div
-											ng-class="(target_selected == 'neptune') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('neptune')">
-											<img
-												src="night/img/catalog/neptune.jpg"
-												height="100px" />
-										</div></td>
-									<td height="20px"><div
-											ng-class="(target_selected == 'uranus') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('uranus')">
-											<img
-												src="night/img/catalog/uranus.jpg"
-												height="100px" />
-										</div></td>
-									<td height="20px"><div
-											ng-class="(target_selected == 'moon') ?  'action_component_enabled': 'action_component'"
-											ng-click="selectTarget('moon')">
-											<img
-												src="night/img/catalog/moon.jpg"
-												height="100px" />
-										</div></td>
-									
-								</tr>
-							</table>
-
-							</tab> 
-							</tabset>
-							Source: wikipedia
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="setTargetName()">{{'night.mount.apply'
-								| i18n}}</button>
-							<button class="btn btn-warning" data-dismiss="modal"
-								ng-click="cancel()">{{'night.mount.close' | i18n}}</button>
-						</div>
-					</div>
-					<div class="modal hide fade" id="CoordinatesModal">
-						<div class="modal-header">
-							<h3>{{'night.coordinates_modal.title' | i18n}}</h3>
-						</div>
-						<div class="modal-body">
-							{{'night.coordinates_modal.introduction' | i18n}}<br><br>
-							<table>
-								<tr>
-									<td>{{'night.coordinates_modal.right_ascension' | i18n}}</td>
-									<td>
-										&nbsp;&nbsp;
-										<input 	ng-model="rah_sel" 
-												ng-init="rah_sel = 0;rah_valid=true" 
-												ng-style="{'border-color': rah_valid ? '#FFFFFF' : '#FF0000'}" 
-												ng-focus="rah_valid=true;rah_sel=''" 
-												maxlength="2" 
-												class="coordinates_no_decimal"></input>&nbsp;h&nbsp;
-										<input 	ng-model="ram_sel" 
-												ng-init="ram_sel = 0;ram_valid=true" 
-												ng-style="{'border-color': ram_valid ? '#FFFFFF' : '#FF0000'}" 
-												ng-focus="ram_valid=true;ram_sel=''" 
-												maxlength="2" 
-												class="coordinates_no_decimal"></input>&nbsp;m&nbsp;
-										<input 	ng-model="ras_sel" 
-												ng-init="ras_sel = 0.0;ras_valid=true" 
-												ng-style="{'border-color': ras_valid ? '#FFFFFF' : '#FF0000'}" 
-												ng-focus="ras_valid=true;ras_sel=''" 
-												maxlength="4" 
-												class="coordinates_one_decimal"></input>&nbsp;s
-									</td>
-								</tr>
-								<tr>
-									<td>{{'night.coordinates_modal.declination' | i18n}}</td>
-									<td>
-										&nbsp;&nbsp;
-										<input 	ng-model="decg_sel" 
-												ng-init="decg_sel = 0;decg_valid=true"
-												ng-style="{'border-color': decg_valid ? '#FFFFFF' : '#FF0000'}"
-												ng-focus="decg_valid=true;decg_sel=''" 
-												maxlength="3" 
-												class="coordinates_no_decimal"></input>&nbsp;º&nbsp;
-										<input 	ng-model="decm_sel" 
-												ng-init="decm_sel = 0;decm_valid=true" 
-												ng-style="{'border-color': decm_valid ? '#FFFFFF' : '#FF0000'}"
-												ng-focus="decm_valid=true;decm_sel=''" 
-												maxlength="2" 
-												class="coordinates_no_decimal"></input>&nbsp;'&nbsp;
-										<input 	ng-model="decs_sel" 
-												ng-init="decs_sel = 0;decs_valid=true"
-												ng-style="{'border-color': decs_valid ? '#FFFFFF' : '#FF0000'}"
-												ng-focus="decs_valid=true;dec_sel=''"  
-												maxlength="2" 
-												class="coordinates_no_decimal"></input>&nbsp;''
-									</td>
-								</tr>
-							</table>
-							<br><br>
-							<div ng-if="radec_invalid" class="alert alert-danger alert-dismissable">
-								{{radec_message | i18n}}
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="setCoordinates()">{{'night.mount.apply'
-								| i18n}}</button>
-							<button class="btn btn-warning" data-dismiss="modal"
-								ng-click="cancel()">{{'night.mount.close' | i18n}}</button>
-						</div>
-					</div>
-					<table id="ra_table" style="position: relative; left: 12px; border-spacing: 5px;margin-bottom:10px;">
-						<tr>
-							<td id="ra_coordinates">
-								{{rah}} : {{ram}} : {{ras}}
-							</td>
-						</tr>
-						<tr>
-							<td id="dec_coordinates">
-								{{decg}} : {{decm}} : {{decs}}
-							</td>
-						</tr>
-						<tr>
-							<td><input id="tags" class="input_text"
-								ng-model="target_name" placeholder="{{'night.mount.object' | i18n}}"></input></td>
-							<td><div id="catalog_button" class="action_component" style="position:absolute;top:45px;right:-35px">
-									<img src="night/img/catalog.png"
-										width="32px" height="32px" ng-click="open_catalog()" />
-								</div></td>
-						</tr>
-					</table>
-					<div id="coordinates_button" class="action_component" style="position:absolute;top:10px;right:0px">
-						<img src="night/img/compass.png" width="24px" height="24px" ng-click="open_coordinates()"/>
-					</div>
-					<div align="center" class="status" ng-model="status_mount"
-					ng-init="status_mount='night.mount.status.ready'" style="position:relative;left:12px;width:85px">
-					<span id="mount_status" class="status_text">{{status_mount |
-						i18n}}</span>
-					</div>
-					<div id="mount_buttons_panel" style="position:absolute;bottom:-20px;right:0px">
-						<img src="night/img/telescope.png"
-							width="40px" height="40px" ng-click="go()"
-							tooltip="Move telescope" />
-					</div>
-				</div>
-			</div>
-			<div id="hand_controller_pad"
-				style="position: absolute; top: -40px; left: 55px;"
-				tooltip="{{'night.mount.messages.relative_move' | i18n}}">
-				<table>
-					<tr>
-						<td></td>
-						<td>
-							<div class="arrow_up"
-								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_north()"></div>
-						</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>
-							<div class="arrow_left"
-								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_west()"></div>
-						</td>
-						<td></td>
-						<td>
-							<div class="arrow_right"
-								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_east()"></div>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<div class="arrow_down"
-								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_south()"></div>
-						</td>
-						<td></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div id="main_ccd_panel" ng-controller="CcdDevice"
-			ng-init="ccd_alarm=false;ccd_alarm_message='night.ccd.messages.no_alarm'">
-			<div style="display: block;">
-				<span class="title">CCD</span> <span id="ccd_budge"
-					title="{{ccd_alarm_message | i18n}}"
-					ng-style="{'opacity': ccd_alarm ? 1 : 0.1}"
-					class="badge badge-important" ng-mouseleave="ccd_alarm=false">0</span>
-
-				<div id="ccd_information" style="float: right;">
-					<img src="night/img/information.png" />
-				</div>
-			</div>
-			<div id="main_ccd_parameters" ng-model="isExposing"
-				ng-init="isExposing=false">
-
-				<div tooltip="{{'night.ccd.tooltip.exposure_time' | i18n}}">
-					<div id="exposure_slider" style="width:80px;"></div>
-					<div id="exposure_time_div" style="position:absolute;top:-6px;right:40px;width:0px;">
-						<input type="text" id="exposure_time" ng-disabled="!hasExposition[ccd_order]" ng-blur="check_exposure_time()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
-					</div>
-				</div>
-				<div tooltip="{{'night.ccd.tooltip.gain' | i18n}}" ng-show="hasGain[ccd_order]" style="margin-top:20px;">
-					<div id="gain_slider" style="width:80px;"></div>
-					<div id="gain_div" style="position:absolute;top:20px;right:-5px">
-						<input type="text" id="gain" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
-					</div>
-				</div>
-				<div style="margin-top:8px;margin-bottom:4px" ng-show="hasFilterWheel[ccd_order]">
-					<select id="filter_selector" class="selector"
-							ng-model="filter" ng-change="setFilter()"
-							ng-disabled="!hasFilterWheel[ccd_order]"
-							ng-options="item for item in filters_0">
-					</select>
-				</div>
-		
-				<div align="center" class="status" ng-model="status_main_ccd"
-					ng-init="status_main_ccd='night.ccd.status.ready'" style="position:absolute;top:80px;width:85px">
-					<span id="ccd_status" class="status_text"
-						ng-class="{'mess-info':isExposing}">{{status_main_ccd |
-						i18n}}</span>
-				</div>
-				<div id="main_ccd_buttons_panel" style="position:absolute;top:100px;width:85px;" align="center">
-					<div style="display:inline"
-						ng-class="hasVideoMode[ccd_order] ? (isExposing && 'ccd_button_disabled' || (isVideo && 'ccd_button_selected' || 'ccd_button')) : 'ccd_button_disabled'"
-						ng-click="hasVideoMode[ccd_order] && !isExposing && video()">
-						<img src="night/img/video.png" width="40px" height="40px" 
-								tooltip="{{'night.ccd.messages.video_text' | i18n}}" />
-					</div>
-					<div id="exposure_button" style="display:inline"
-						ng-class="isExposing ? 'ccd_button_selected' : 'ccd_button'"
-						ng-click="!isExposing && expose()">
-						<img src="night/img/ccd.png" width="30px" height="30px" 
-								tooltip="{{'night.ccd.messages.expose_text' | i18n}}" />
-					</div>	
-				</div>
-			</div>
-			<div id="ccd_button_1"
-				ng-class="hasCcd[1] ? ((ccd_order == 1) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
-				ng-click="hasCcd[1] && setOrder(1)"
-				style="position: absolute; width: 40px; left: -600px;top:120px"
-				tooltip="{{'night.ccd.messages.secondary_ccd' | i18n}}">
-				<img src="night/img/eye.png" />
-			</div>
-			<div id="ccd_button_0"
-				ng-class="hasCcd[0] ? ((ccd_order == 0) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
-				ng-click="hasCcd[0] && setOrder(0)"
-				style="position: absolute; width: 54px; top: 120px; left: -100px"
-				tooltip="{{'night.ccd.messages.main_ccd' | i18n}}">
-				<img src="night/img/eye.png" />
-			</div>
-		</div>
-	</div>
-
-	<!-- <div style="width:500px;position:absolute;top:80px;left:270px;"> -->
-
-
-
-	<!-- </div>  -->
-
-	<div id="gloria_info">
+		<div id="gloria_info">
 		<span class="title_info">GLORIA</span> <span class="regular_info">Info</span>
 		<div id="weather_station" ng-controller="WeatherDevice" ng-init="weather_alarm=false"
 			style="width: 400px; margin-top: -5px; margin-left: 100px">
@@ -486,8 +122,378 @@
 		 
 	</div>
 
+	<div id="left_controls">
+		<div id="surveillance_panel" ng-controller="GetCamerasCtrl" ng-init="hasSecondaryWebcam = false">
+			<div style="margin-top: 80px;">
+				<div style="width: 100px; text-align: center;">
+					<span id="scam0_name" class="title">SCAM 0</span>
+				</div>
+				<div class="expand" style="z-index: 500;">
+					<div class="positioner">
+						<a class="slide" aria-haspopup="true"> <img id="scam0_img"
+							src="night/img/white_noise.gif" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div ng-show="hasSecondaryWebcam" style="margin-top: 80px;">
+				<div style="width: 100px; text-align: center;">
+					<span id="scam1_name" class="title">SCAM 1</span>
+				</div>
+				<div class="expand" style="z-index: 409;">
+					<div class="positioner">
+						<a class="slide" aria-haspopup="true"> <img id="scam1_img"
+							src="night/img/white_noise.gif" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="right_controls">
+		<div ng-controller="MountDevice" ng-init="mount_alarm=false;radec_invalid=false;mount_alarm_message='night.mount.messages.no_alarm';radec_message='night.coordinates_modal.title'">
+			<div id="mount_target_panel">
+				<div style="display: block;">
+					<span class="title">{{'night.mount.title' | i18n}}</span> <span id="mount_budge"
+						data-content="{{mount_alarm_message | i18n}}"
+						data-animation="yes"
+						data-trigger="click"
+						data-placement="top"
+						data-show="500"
+						data-html="true"
+						data-title="<strong>Alert</strong><button type=&quot;button&quot; id=&quot;close&quot; class=&quot;close&quot; onclick=&quot;$('#mount_budge').popover('hide');&quot;>&times;</button>"
+						ng-style="{'opacity': mount_alarm ? 1 : 0.1}"
+						class="badge badge-important">0</span>
+	
+					<div id="mount_information" style="float: right;" ng-click="showInformation()">
+						<img src="night/img/information.png" />
+					</div>
+				</div>
+				<div id="mount_parameters">
+					<div class="modal hide fade" id="CatalogModal">
+						<div class="modal-header">
+							<h3>Catalog</h3>
+						</div>
+						<div class="modal-body">
+							<tabset> <tab heading="{{'night.mount.catalog.solar_tab' | i18n}}">
+							<table cellspacing="10px">
+								<tr>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.mercury'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.venus'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.mars'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.jupiter'
+										| i18n}}</td>
+								</tr>
+								<tr>
+									<td height="100px"><div
+											ng-class="(target_selected == 'mercury') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('mercury')">
+											<img
+												src="night/img/catalog/mercury.jpg"
+												height="100px" />
+										</div></td>
+									<td height="100px"><div
+											ng-class="(target_selected == 'venus') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('venus')">
+											<img src="night/img/catalog/venus.jpg"
+												height="100px" />
+										</div></td>
+									<td height="100px"><div
+											ng-class="(target_selected == 'mars') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('mars')">
+											<img src="night/img/catalog/mars.jpg"
+												height="100px" />
+										</div></td>
+									<td height="100px"><div
+											ng-class="(target_selected == 'jupiter') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('jupiter')">
+											<img
+												src="night/img/catalog/jupiter.jpg"
+												height="100px" />
+										</div></td>
+								</tr>
+								<tr>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.saturn'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.neptune'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.uranus'
+										| i18n}}</td>
+									<td height="20px" class="catalog_title"></td>
+								</tr>
+								<tr>
+									<td height="20px"><div
+											ng-class="(target_selected == 'saturn') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('saturn')">
+											<img
+												src="night/img/catalog/saturn.jpg"
+												height="100px" />
+										</div></td>
+									<td height="20px"><div
+											ng-class="(target_selected == 'neptune') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('neptune')">
+											<img
+												src="night/img/catalog/neptune.jpg"
+												height="100px" />
+										</div></td>
+									<td height="20px"><div
+											ng-class="(target_selected == 'uranus') ?  'action_component_enabled': 'action_component'"
+											ng-click="selectTarget('uranus')">
+											<img
+												src="night/img/catalog/uranus.jpg"
+												height="100px" />
+										</div></td>
+									<td height="20px"></td>
+									
+								</tr>
+							</table>
+
+							</tab> 
+							</tabset>
+							Source: wikipedia
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="setTargetName()">{{'night.mount.apply'
+								| i18n}}</button>
+							<button class="btn btn-warning" data-dismiss="modal"
+								ng-click="cancel()">{{'night.mount.close' | i18n}}</button>
+						</div>
+					</div>
+					<div class="modal hide fade" id="CoordinatesModal">
+						<div class="modal-header">
+							<h3>{{'night.coordinates_modal.title' | i18n}}</h3>
+						</div>
+						<div class="modal-body">
+							<span style="font-size:1.1em">{{'night.coordinates_modal.introduction' | i18n}}</span><br>
+							<span style="font-size:0.9em;margin-left:2em;color:red">{{'night.coordinates_modal.ra_info' | i18n}}</span><br>
+							<span style="font-size:0.9em;margin-left:2em;color:red">{{'night.coordinates_modal.dec_info' | i18n}}</span><br><br>
+							<table>
+								<tr>
+									<td>{{'night.coordinates_modal.right_ascension' | i18n}}</td>
+									<td>
+										&nbsp;&nbsp;
+										<input 	ng-model="rah_sel" 
+												ng-init="rah_sel = 0;rah_valid=true" 
+												ng-style="{'border-color': rah_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="rah_valid=true;rah_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;h&nbsp;
+										<input 	ng-model="ram_sel" 
+												ng-init="ram_sel = 0;ram_valid=true" 
+												ng-style="{'border-color': ram_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="ram_valid=true;ram_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;m&nbsp;
+										<input 	ng-model="ras_sel" 
+												ng-init="ras_sel = 0.0;ras_valid=true" 
+												ng-style="{'border-color': ras_valid ? '#FFFFFF' : '#FF0000'}" 
+												ng-focus="ras_valid=true;ras_sel=''" 
+												maxlength="4" 
+												class="coordinates_one_decimal"></input>&nbsp;s
+									</td>
+								</tr>
+								<tr>
+									<td>{{'night.coordinates_modal.declination' | i18n}}</td>
+									<td>
+										&nbsp;&nbsp;
+										<input 	ng-model="decg_sel" 
+												ng-init="decg_sel = 0;decg_valid=true"
+												ng-style="{'border-color': decg_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decg_valid=true;decg_sel=''" 
+												maxlength="3" 
+												class="coordinates_no_decimal"></input>&nbsp;º&nbsp;
+										<input 	ng-model="decm_sel" 
+												ng-init="decm_sel = 0;decm_valid=true" 
+												ng-style="{'border-color': decm_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decm_valid=true;decm_sel=''" 
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;'&nbsp;
+										<input 	ng-model="decs_sel" 
+												ng-init="decs_sel = 0;decs_valid=true"
+												ng-style="{'border-color': decs_valid ? '#FFFFFF' : '#FF0000'}"
+												ng-focus="decs_valid=true;dec_sel=''"  
+												maxlength="2" 
+												class="coordinates_no_decimal"></input>&nbsp;''
+									</td>
+								</tr>
+							</table>
+							<br><br>
+							<div ng-if="radec_invalid" class="alert alert-danger alert-dismissable">
+								{{radec_message | i18n}}
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="setCoordinates()">{{'night.mount.apply'
+								| i18n}}</button>
+							<button class="btn btn-warning" data-dismiss="modal"
+								ng-click="cancel()">{{'night.mount.close' | i18n}}</button>
+						</div>
+					</div>
+					<table id="ra_table" style="position: relative; left: 12px; border-spacing: 5px;margin-bottom:10px;">
+						<tr>
+							<td id="ra_coordinates">
+								{{rah}} : {{ram}} : {{ras}}
+							</td>
+							<td>
+								<div id="coordinates_button" class="action_component" style="position:absolute;top:10px;right:-30px">
+									<img src="night/img/compass.png" 
+										width="24px" height="24px" ng-click="open_coordinates()"/>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td id="dec_coordinates">
+								{{decg}} : {{decm}} : {{decs}}
+							</td>
+						</tr>
+						<tr>
+							<td><input id="tags" class="input_text"
+								ng-model="target_name" placeholder="{{'night.mount.object' | i18n}}"></input></td>
+							<td><div id="catalog_button" class="action_component" style="position:absolute;top:45px;right:-35px">
+									<img src="night/img/catalog.png"
+										width="32px" height="32px" ng-click="open_catalog()" />
+								</div></td>
+						</tr>
+					</table>
+					
+					<div align="center" class="status" ng-model="status_mount"
+					ng-init="status_mount='night.mount.status.ready'" style="position:relative;left:12px;width:85px">
+					<span id="mount_status" class="status_text">{{status_mount |
+						i18n}}</span>
+					</div>
+					<div id="mount_buttons_panel" style="position:absolute;bottom:-20px;right:0px">
+						<img src="night/img/telescope.png"
+							width="40px" height="40px" ng-click="go()"
+							tooltip="Move telescope" />
+					</div>
+				</div>
+			</div>
+			<div id="hand_controller_pad"
+				style="position: absolute; top: -40px; left: 55px;"
+				tooltip="{{'night.mount.messages.relative_move' | i18n}}">
+				<table>
+					<tr>
+						<td></td>
+						<td>
+							<div class="arrow_up"
+								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_north()"></div>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="arrow_left"
+								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_west()"></div>
+						</td>
+						<td></td>
+						<td>
+							<div class="arrow_right"
+								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_east()"></div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<div class="arrow_down"
+								ng-class="hasMove ? 'component_enabled' : 'component_disabled'" ng-click="hasMove && move_south()"></div>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="main_ccd_panel" ng-controller="CcdDevice"
+			ng-init="ccd_alarm=false;ccd_alarm_message='night.ccd.messages.no_alarm'">
+			<div style="display: block;">
+				<span class="title">CCD</span> <span id="ccd_budge"
+					data-content="{{ccd_alarm_message | i18n}}"
+					data-animation="yes"
+					data-trigger="click"
+					data-placement="top"
+					data-show="500"
+					data-html="true"
+					data-title="<strong>Alert</strong><button type=&quot;button&quot; id=&quot;close&quot; class=&quot;close&quot; onclick=&quot;$('#ccd_budge').popover('hide');&quot;>&times;</button>"
+					ng-style="{'opacity': ccd_alarm ? 1 : 0.1}"
+					class="badge badge-important">0</span>
+
+				<div id="ccd_information" style="float: right;">
+					<img src="night/img/information.png" />
+				</div>
+			</div>
+			<div id="main_ccd_parameters" ng-model="isExposing"
+				ng-init="isExposing=false">
+
+				<div tooltip="{{'night.ccd.tooltip.exposure_time' | i18n}}">
+					<div id="exposure_slider" style="width:80px;"></div>
+					<div id="exposure_time_div" style="position:absolute;top:-6px;right:40px;width:0px;">
+						<input type="text" id="exposure_time" ng-disabled="!hasExposition[ccd_order]" ng-blur="check_exposure_time()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
+					</div>
+				</div>
+				<div tooltip="{{'night.ccd.tooltip.gain' | i18n}}" ng-show="hasGain[ccd_order]" style="margin-top:20px;">
+					<div id="gain_slider" style="width:80px;"></div>
+					<div id="gain_div" style="position:absolute;top:20px;right:-5px">
+						<input type="text" id="gain" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
+					</div>
+				</div>
+				<div style="margin-top:8px;margin-bottom:4px" ng-show="hasFilterWheel[ccd_order]">
+					<select id="filter_selector" class="selector"
+							ng-model="filter" ng-change="setFilter()"
+							ng-disabled="!hasFilterWheel[ccd_order]"
+							ng-options="item for item in filters_0">
+					</select>
+				</div>
+		
+				<div align="center" class="status" ng-model="status_main_ccd"
+					ng-init="status_main_ccd='night.ccd.status.ready'" style="position:absolute;top:80px;width:85px">
+					<span id="ccd_status" class="status_text"
+						ng-class="{'mess-info':isExposing}">{{status_main_ccd |
+						i18n}}</span>
+				</div>
+				<div id="main_ccd_buttons_panel" style="position:absolute;top:100px;width:85px;" align="center">
+					<div style="display:inline"
+						ng-class="hasVideoMode[ccd_order] ? (isExposing && 'ccd_button_disabled' || (isVideo && 'ccd_button_selected' || 'ccd_button')) : 'ccd_button_disabled'"
+						ng-click="hasVideoMode[ccd_order] && !isExposing && video()">
+						<img src="night/img/video.png" width="40px" height="40px" 
+								tooltip="{{'night.ccd.messages.video_text' | i18n}}" />
+					</div>
+					<div id="exposure_button" style="display:inline"
+						ng-class="isExposing ? 'ccd_button_selected' : 'ccd_button'"
+						ng-click="!isExposing && expose()">
+						<img src="night/img/ccd.png" width="30px" height="30px" 
+								tooltip="{{'night.ccd.messages.expose_text' | i18n}}" />
+					</div>	
+				</div>
+			</div>
+			<div id="ccd_button_1"
+				ng-class="hasCcd[1] ? ((ccd_order == 1) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
+				ng-click="hasCcd[1] && setOrder(1)"
+				style="position: absolute; width: 40px; left: -600px;top:120px"
+				tooltip="{{'night.ccd.messages.secondary_ccd' | i18n}}">
+				<img src="night/img/eye.png" />
+			</div>
+			<div id="ccd_button_0"
+				ng-class="hasCcd[0] ? ((ccd_order == 0) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
+				ng-click="hasCcd[0] && setOrder(0)"
+				style="position: absolute; width: 54px; top: 120px; left: -100px"
+				tooltip="{{'night.ccd.messages.main_ccd' | i18n}}">
+				<img src="night/img/eye.png" />
+			</div>
+		</div>
+	</div>
+
+	<!-- <div style="width:500px;position:absolute;top:80px;left:270px;"> -->
+
+
+
+	<!-- </div>  -->
+
+
+
 	<div ng-controller="SolarImagesCtrl" class="span9"
-		style="height: 100px; cursor: default;position:absolute;top:920px">
+		style="height: 100px; cursor: default;position:absolute;top:950px">
 		<div align="center">
 			<h5 class="label-info title_night" style="margin-top: 0px">Álbum</h5>
 		</div>
@@ -540,6 +546,22 @@
 						</div>
    			 		</script>
 		</div>
+				
+			<div class="modal hide fade" id="TutorialModal">
+				<div class="modal-header">
+					<h3>{{'night.general.information' | i18n}}</h3>
+				</div>
+				<div class="modal-body">
+					<center>
+						<object width="420" height="315"><param name="movie" value="//www.youtube.com/v/DqOHZB1hsuM?version=3&amp;hl=en_US&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/DqOHZB1hsuM?version=3&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-warning" data-dismiss="modal"
+							ng-click="">{{'night.mount.close' | i18n}}</button>
+				</div>
+			</div>
+		
 	</div>
 <!-- 
 <div style="position:absolute;top:250px;left:1000px">
@@ -640,4 +662,5 @@
 			gainChange = true;
 		}
 	});
+	
 </script>
