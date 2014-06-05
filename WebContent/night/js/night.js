@@ -334,7 +334,7 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 	*/
 	$scope.showInformation = function(){
 
-		 
+		 console.log("Tutorial")
 //		raTip.setContent($("#infRa").text());
 //		raTip.show();
 //		
@@ -1505,7 +1505,6 @@ function TimeReservationCtrl($gloriaAPI, $scope,$timeout, $gloriaLocale){
 				var remainingTime = Math.max(0, parseInt(data))
 				var remainingMinutes = parseInt(remainingTime / 60);
 				var remainingSeconds = remainingTime % 60;
-				
 				//$("#timer_minutes").text(remainingMinutes);
 				//$("#timer_seconds").text(remainingSeconds);
 				
