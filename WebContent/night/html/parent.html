@@ -7,7 +7,10 @@
 <div ng-show="nightReady" ng-controller="NightMainCtrl">
 	<div class="page-header" style="border: none; margin-bottom: 10px">
 		<div class="row" style="margin-bottom: 0px">
-				<h2 class="test" style="margin-left: 18px">{{'night.header'|i18n}}<button class="btn btn-info" style="float:right;margin-top:5px;" ng-click="activateTutorial()"><i class="icon-large icon-play-circle"></i>&nbsp;Help</button></h2>
+				<h2 class="test" style="margin-left: 18px">{{'night.header'|i18n}}
+					<button class="btn btn-info" style="float:right;margin-top:5px;" ng-click="activateTutorial()" tooltip-popup-delay="500" tooltip="{{'night.reservation.video_tutorials_tooltip'|i18n}}" tooltip-placement="top">
+					<i class="icon-large icon-play-circle"></i>&nbsp;{{'night.reservation.video_tutorials'|i18n}}</button>
+				</h2>
 				
 		</div>
 	</div>
