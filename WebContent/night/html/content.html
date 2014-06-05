@@ -88,7 +88,7 @@
 				</table>
 			</div>
 		</div>
-		<div id="remainingTimer" class="timer" ng-controller="TimeReservationCtrl" ng-init="last_minutes=false">
+		<div id="remainingTimer" class="timer" ng-controller="TimeReservationCtrl" ng-init="last_minutes=false"	>
 			<div class="modal hide fade" id="ReservationTimeModal">
 				<div class="modal-header">
 					<h3>{{'night.general.alert' | i18n}}</h3>
@@ -101,9 +101,18 @@
 							ng-click="">{{'night.mount.close' | i18n}}</button>
 				</div>
 			</div>
-			<span id="timer_minutes" ng-style="{color: (last_minutes && 'red') || 'silver'}">--</span>
-			<span ng-style="{color: (last_minutes && 'red') || 'silver'}">:</span>
-			<span id="timer_seconds" ng-style="{color: (last_minutes && 'red') || 'silver'}">--</span>
+			<span id="step2_panel" 
+				data-content="{{'night.tutorial.step2' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>2 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+				data-animation="yes"
+				data-trigger="manual"
+				data-placement="top"
+				data-show="500"
+				data-html="true"
+				data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#step2_panel').popover('hide');&quot;>&times;</button>">
+				<span id="timer_minutes" ng-style="{color: (last_minutes && 'red') || 'silver'}">--</span>
+				<span ng-style="{color: (last_minutes && 'red') || 'silver'}">:</span>
+				<span id="timer_seconds" ng-style="{color: (last_minutes && 'red') || 'silver'}">--</span>
+			</span>
 		</div>
 		<div ng-controller="DomeCtrl">
 			<div class="modal hide fade" id="DomeModal">
@@ -121,9 +130,15 @@
 		</div>
 		 
 	</div>
-
 	<div id="left_controls">
-		<div id="surveillance_panel" ng-controller="GetCamerasCtrl" ng-init="hasSecondaryWebcam = false">
+		<div id="surveillance_panel" ng-controller="GetCamerasCtrl" ng-init="hasSecondaryWebcam = false"
+				data-content="{{'night.tutorial.step1' | i18n}}"
+				data-animation="yes"
+				data-trigger="click"
+				data-placement="top left"
+				data-show="500"
+				data-html="true"
+				data-title="<strong>Information</strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot;><i class=&quot;icon-large icon-chevron-right&quot;></i></button><button type=&quot;button&quot; class=&quot;close&quot; onclick=&quot;$('#surveillance_panel').popover('hide');&quot;>&times;</button>">
 			<div style="margin-top: 80px;">
 				<div style="width: 100px; text-align: center;">
 					<span id="scam0_name" class="title">SCAM 0</span>
@@ -165,7 +180,7 @@
 						ng-style="{'opacity': mount_alarm ? 1 : 0.1}"
 						class="badge badge-important">0</span>
 	
-					<div id="mount_information" style="float: right;" ng-click="showInformation()">
+					<div id="mount_information" style="float: right;" onclick="showTutorial()">
 						<img src="night/img/information.png" />
 					</div>
 				</div>
@@ -338,7 +353,15 @@
 								{{rah}} : {{ram}} : {{ras}}
 							</td>
 							<td>
-								<div id="coordinates_button" class="action_component" style="position:absolute;top:10px;right:-30px">
+							
+								<div id="coordinates_button" class="action_component" style="position:absolute;top:10px;right:-30px"
+										data-content="{{'night.tutorial.step3' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>3 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-animation="yes"
+										data-trigger="manual"
+										data-placement="right"
+										data-show="500"
+										data-html="true"
+										data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#coordinates_button').popover('hide');&quot;>&times;</button>">
 									<img src="night/img/compass.png" 
 										width="24px" height="24px" ng-click="open_coordinates()"/>
 								</div>
@@ -350,12 +373,33 @@
 							</td>
 						</tr>
 						<tr>
-							<td><input id="tags" class="input_text"
-								ng-model="target_name" placeholder="{{'night.mount.object' | i18n}}"></input></td>
-							<td><div id="catalog_button" class="action_component" style="position:absolute;top:45px;right:-35px">
+							<td>
+								<div id="tags_tutorial"
+										data-content="{{'night.tutorial.step4' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>4 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-animation="yes"
+										data-trigger="manual"
+										data-placement="left"
+										data-show="500"
+										data-html="true"
+										data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#tags_tutorial').popover('hide');&quot;>&times;</button>">
+									<input id="tags" class="input_text"
+										ng-model="target_name" placeholder="{{'night.mount.object' | i18n}}">
+									</input>
+								</div>
+							</td>
+							<td>
+								<div id="catalog_button" class="action_component" style="position:absolute;top:45px;right:-35px"
+										data-content="{{'night.tutorial.step5' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>5 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-animation="yes"
+										data-trigger="manual"
+										data-placement="right"
+										data-show="500"
+										data-html="true"
+										data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#catalog_button').popover('hide');&quot;>&times;</button>">									
 									<img src="night/img/catalog.png"
 										width="32px" height="32px" ng-click="open_catalog()" />
-								</div></td>
+								</div>
+							</td>
 						</tr>
 					</table>
 					
@@ -663,4 +707,46 @@
 		}
 	});
 	
+	var tutorial_step = 2;
+	
+	function nextTutorial(){
+		if (tutorial_step<5){
+			hideTutorial();
+			tutorial_step++;
+			showTutorial();
+		}
+	}
+	
+	function prevTutorial(){
+		if (tutorial_step>2){
+			hideTutorial();
+			tutorial_step--;
+			showTutorial();					
+		}
+	}
+	
+	function showTutorial(){
+		//alert(tutorial_step);
+		if (tutorial_step == 2){
+			$("#step2_panel").popover('show');
+		} else if (tutorial_step == 3){
+			$("#coordinates_button").popover('show');
+		} else if (tutorial_step ==4){
+			$("#tags_tutorial").popover('show');
+		} else if (tutorial_step ==5){
+			$("#catalog_button").popover('show');
+		}
+	}
+	
+	function hideTutorial(){
+		if (tutorial_step == 2){
+			$("#step2_panel").popover('hide');
+		} else if (tutorial_step == 3){
+			$("#coordinates_button").popover('hide');
+		} else if (tutorial_step == 4){
+			$("#tags_tutorial").popover('hide');
+		} else if (tutorial_step == 5){
+			$("#catalog_button").popover('hide');
+		}		
+	}
 </script>
