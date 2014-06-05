@@ -14,14 +14,16 @@
         "nvalid": "The reservation id @{p1}@ is not valid",
         "rating": "What is your opinion about the experiment?",
         "questionnaire":"http://goo.gl/Th8nmI",
-        "send": "Send"
+        "send": "Send",
+        "video_tutorials":"Tutorials",
+        "video_tutorials_tooltip": "Video Tutorials"
     },
     "tutorial": {
-    	"step1":"Step 1: Enlarge the webcam images by moving the pointer over them, to get to see the telescope movement.",
-    	"step2":"Step 2: Remaining Time of observation",
-    	"step3":"Step 3: Search objects by their absolute equatorial Coordinates.",
-    	"step4":"Step 4: Search objects by their names: M13, NGC5194,...",
-    	"step5":"Step 5: Search Planets",
+    	"step1":"Enlarge the webcam images by moving the pointer over them, to get to see the telescope movement.",
+    	"step2":"Remaining Time of observation",
+    	"step3":"Search objects by their absolute equatorial Coordinates.",
+    	"step4":"Search objects by their names: M13, NGC5194,...",
+    	"step5":"Search Planets",
     	"step6":"Step 6: Slew telescope Icon",
     	"step7":"Step 7: Images Focuser",
     	"step8":"Step 8: CCD Camera selector",
@@ -145,5 +147,8 @@
 		"declination": "Declination",
 		"invalid_ra": "Invalid Right Ascension coordinate",
 		"invalid_dec": "Invalid Declination coordinate"
+	},
+	"ques": {
+		"q1": "What the fuck?"
 	}
 }
