@@ -28,9 +28,10 @@ function NightMainCtrl($gloriaAPI, $scope, $timeout, $gloriaLocale,
 	$scope.ccdProblem = false;
 	$scope.weatherAlarm = false;
 	
-	//console.log("Language:"+$gloriaLocale.id);
-	console.log($gloriaLocale.id);
 	
+	//console.log($gloriaLocale.id);
+//	console.log("Language:"+JSON.stringify($gloriaLocale));
+	console.log("Lang:"+$gloriaLocale.getPreferredLanguage());
 	if ($gloriaLocale.id == "es"){
 		$scope.nightQuestions = $sce.trustAsResourceUrl("https://docs.google.com/forms/d/1ys1b8EiC8COj8oBQtFQWuCE3f_J1ljZUojpVGm0TOUk/viewform");
 	} else {
