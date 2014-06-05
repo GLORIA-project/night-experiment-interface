@@ -20,6 +20,34 @@
 	background:#B94A48;
 	text-color:white;
 }
+.close_tutorial{
+	position:absolute;
+	top:1px;
+	right:5px;
+}
+.tutorial_line{
+	margin:5px;
+	border-top: 0px solid #EEE;
+}
+.next_button{
+	margin-left:1em;
+	margin-right:1em;
+	font-size:1.4em;
+}
+.title_tutorial{
+	opacity:0.4;
+	padding:0;
+	cursor:pointer;
+	background: transparent;
+	border:0;
+	color:white;
+}
+.title_tutorial:hover,
+.title_tutorial:focus{
+	text_decoration:none;
+	cursor:pointer;
+	opacity:0.8;
+}
 #mount_parameters{
 	position:relative;
 	top: 10px;
@@ -140,6 +168,7 @@ a.prev span, a.next span {
 .popover{
 	color:silver;
 	font-size:10px;
+	width:250px;
 }
 .title{
 	color:#984d4a;
