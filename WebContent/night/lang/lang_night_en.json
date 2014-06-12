@@ -23,7 +23,7 @@
     	"step2":"Remaining Time of observation",
     	"step3":"Find objects by their absolute equatorial Coordinates.",
     	"step4":"Find objects by their names: M13, NGC5194,...",
-    	"step5":"Find Planets",
+    	"step5":"Find Planets and Catalog",
     	"step6":"Slew telescope Icon",
     	"step7":"Images Focuser",
     	"step8":"CCD Camera selector",
@@ -61,7 +61,7 @@
 					"invalid_rah": "Invalid RA value"
 				},
 				"catalog": {
-					"solar_tab": "SOLAR SYSTEM",
+					"solar_tab": "CATALOG",
 					"mercury": "MERCURY",
 					"venus": "VENUS",
 					"mars": "MARS",
