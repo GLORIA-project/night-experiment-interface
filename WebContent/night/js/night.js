@@ -218,37 +218,51 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 	
 	$scope.mount_sequence = $sequenceFactory.getSequence();
 	
+	var latitude_array = {
+			'BART' : 49.909049,
+			'TADn' : 28.298566,
+			'BOOTES-1A' : 37.10402,
+			'BOOTES-2' : 36.7592,
+			'D50' : 49.909372
+	}
+	var longitude_array = {
+			'BART' : 14.781911,
+			'TADn' : -16.509490,
+			'BOOTES-1A' : -6.73406,
+			'BOOTES-2' : -4.0410,
+			'D50' : 14.781363
+	}
+	var magnitude_array = {
+			'BART' : 10,
+			'TADn' : 10,
+			'BOOTES-1A' : 10,
+			'BOOTES-2' : 10,
+			'D50' : 10
+	}
+	
 	$scope.$watch('rid', function(){
 		
 		if ($scope.rid > 0){
 			$scope.mountTimer = $timeout ($scope.mountMovementTimer, 3000);
-			/*
-			$gloriaAPI.executeOperation($scope.rid,'load_mount_status',function(success){
-				$gloriaAPI.getParameterTreeValue($scope.rid,'mount','status',function(success){
-					console.log("Status:"+success);
-					if (success == "PARKED"){
-						$scope.status_mount = "night.mount.status.parked"
-					} else if (success == "TRACKING"){
-						$scope.status_mount = "night.mount.status.tracking"
-					} else if (success == "STOP"){
-						$scope.status_mount = "night.mount.status.stop"
-					} else if (success == "MOVING"){
-						$scope.status_mount = "night.mount.status.moving"
-					} else if (success == "UNDEFINED"){
-						$scope.status_mount = "night.mount.status.undefined"
-					}
-					
-				}, function(error){
-					$scope.mount_alarm = true;
-					$scope.mount_alarm_message = "night.mount.messages.alarm_status";
-					$scope.mount_status = "night.mount.status.error";
-				});
+			$gloriaAPI.getParameterTreeValue($scope.rid,'rt','name',function(success){
+				if (latitude_array[success] < 0){
+					$scope.latitude = -1 * latitude_array[success];
+					$scope.latitudeSign = 'South';
+				} else {
+					$scope.latitude = latitude_array[success];
+					$scope.latitudeSign = 'North';
+				}
+				if (longitude_array[success] < 0){
+					$scope.longitude = -1 * longitude_array[success];
+					$scope.longitudeSign = 'West';
+				} else {
+					$scope.longitude = longitude_array[success];
+					$scope.longitudeSign = 'East';
+				}
+				$scope.magnitude = magnitude_array[success];
 			}, function(error){
-				$scope.mount_alarm = true;
-				$scope.mount_alarm_message = "night.mount.messages.alarm_status";
-				$scope.mount_status = "night.mount.status.error";
+
 			});
-			*/
 		}
 	});
 	
@@ -334,7 +348,7 @@ function MountDevice($gloriaAPI , $scope, $sequenceFactory,$timeout){
 	*/
 	$scope.showInformation = function(){
 
-		 console.log("Tutorial")
+		 console.log("Tutorial");
 //		raTip.setContent($("#infRa").text());
 //		raTip.show();
 //		
@@ -654,6 +668,7 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 					//We select the first of the list as default value
 					$gloriaAPI.setParameterTreeValue($scope.rid,'fw','selected',listFilters.filters[0],function(success){
 						$scope.filter = $scope.filters_0[0];
+						tutorial_filter_wheel = true;
 						$gloriaAPI.executeOperation($scope.rid,'select_filter', function(success){
 							
 						}, function(dataError, statusError){
@@ -839,12 +854,22 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 		}
 	};
 	
-	$scope.setOrder = function(order){
+	$scope.setOrder = function(){
 		console.log("Changing ccd order");
-		$scope.ccd_order = parseInt(order);
+		var order = $scope.ccd_order;
+		if ($scope.ccd_order == 0){
+			order = 1;
+		} else if ($scope.ccd_order == 1){
+			order = 0;
+		}
 		$gloriaAPI.setParameterTreeValue($scope.rid,'cameras','ccd.order',parseInt(order),function(success){
+			$scope.$watch('ccd_order', function(){
+				$('#ccd_button_message').popover('show');
+				
+			});
+			$scope.ccd_order = parseInt(order);
 			$gloriaAPI.executeOperation($scope.rid,'get_ccd_attributes', function(success){
-				console.log("get ccd attributes from order:"+parseInt(order));
+				console.log("get ccd attributes from order :"+$scope.ccd_order);
 				//Check the exposure time
 				//Check if ccd has gain
 				$gloriaAPI.getParameterTreeValue($scope.rid,'cameras','ccd.images.['+parseInt(order)+']',function(success){
@@ -857,11 +882,13 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 							
 							//$("#gain_slider").slider({value: $scope.gain, disabled:false});
 							$scope.hasGain[$scope.ccd_order] = true;
+							tutorial_gain = true;
 							$("#gain").val($scope.gain);
 						} else {
 							
 							//$("#gain_slider").slider({value: $scope.gain, disabled:true});
 							$scope.hasGain[$scope.ccd_order] = false;
+							tutorial_gain = false;
 							$("#gain").val($scope.gain);
 						}
 					}, function(error){
@@ -957,8 +984,8 @@ function GetNumCcds($gloriaAPI, data){
 			} 
 			if (success.ccd.number>=2){
 				data.hasCcd[1] = true;
-			}
-			
+				tutorial_hasCcds = true;
+			} 
 		}, function(error){
 			//alert(error);
 		});
@@ -1007,6 +1034,7 @@ function LoadCcdAttributes($gloriaAPI, data){
 						$("#gain").val(data.gain);
 						$("#gain_slider").slider({value: data.gain});
 						data.hasGain[data.ccd_order] = true;
+						tutorial_gain = true;
 					} else {
 						
 						//$("#gain_slider").slider({value: data.gain, disabled:true});

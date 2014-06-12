@@ -14,7 +14,14 @@
 	<div ng-controller="FocuserCtrl"
 		ng-init="focuserPressed=false;currentFocuserPosition=0">
 		<div id="focus_marker" tooltip="{{'night.focuser.tooltip' | i18n}}"
-			ng-mousedown="activate_focuser()"></div>
+			ng-mousedown="activate_focuser()"
+			data-content="{{'night.tutorial.step7' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>7 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+			data-animation="yes"
+			data-trigger="manual"
+			data-placement="bottom" 
+			data-html="true"
+			data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#focus_marker').popover('hide');&quot;>&times;</button>">
+			</div>
 		<div id="focus_marker_info"
 			ng-style="{opacity: (focuserPressed && '1.0') || '0.0'}">
 			<br>
@@ -35,7 +42,12 @@
 
 		</div>
 	</div>
-
+	<button class="btn btn-info" style="float:right;margin-top:105px;padding-left:2em;padding-right:2em" 
+				ng-click="activateTutorial()" tooltip-popup-delay="500" 
+				tooltip="{{'night.reservation.video_tutorials_tooltip'|i18n}}" tooltip-placement="top" 
+				ng-style="{'opacity': tutorial_activated ? 1 : 0.5}">
+				 	{{'night.reservation.video_tutorials'|i18n}}
+	 </button>
 		<div id="gloria_info">
 		<span class="title_info">GLORIA</span> <span class="regular_info">Info</span>
 		<div id="weather_station" ng-controller="WeatherDevice" ng-init="weather_alarm=false"
@@ -102,7 +114,7 @@
 				</div>
 			</div>
 			<span id="step2_panel" 
-				data-content="{{'night.tutorial.step2' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>2 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+				data-content="{{'night.tutorial.step2' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>2 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
 				data-animation="yes"
 				data-trigger="manual"
 				data-placement="top"
@@ -131,16 +143,16 @@
 		 
 	</div>
 	<div id="left_controls">
-		<div id="surveillance_panel" ng-controller="GetCamerasCtrl" ng-init="hasSecondaryWebcam = false"
-				data-content="{{'night.tutorial.step1' | i18n}}"
-				data-animation="yes"
-				data-trigger="click"
-				data-placement="top left"
-				data-show="500"
-				data-html="true"
-				data-title="<strong>Information</strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot;><i class=&quot;icon-large icon-chevron-right&quot;></i></button><button type=&quot;button&quot; class=&quot;close&quot; onclick=&quot;$('#surveillance_panel').popover('hide');&quot;>&times;</button>">
-			<div style="margin-top: 80px;">
-				<div style="width: 100px; text-align: center;">
+		<div id="surveillance_panel" ng-controller="GetCamerasCtrl" ng-init="hasSecondaryWebcam = false">
+			<div style="margin-top: 80px;">			
+				<div id="tutorial_surveillance" style="width: 100px; text-align: center;"
+						data-content="{{'night.tutorial.step1' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>1 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+						data-animation="yes"
+						data-trigger="manual"
+						data-placement="top"
+						data-show="500"
+						data-html="true"
+						data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#tutorial_surveillance').popover('hide');&quot;>&times;</button>">
 					<span id="scam0_name" class="title">SCAM 0</span>
 				</div>
 				<div class="expand" style="z-index: 500;">
@@ -180,9 +192,6 @@
 						ng-style="{'opacity': mount_alarm ? 1 : 0.1}"
 						class="badge badge-important">0</span>
 	
-					<div id="mount_information" style="float: right;" onclick="showTutorial()">
-						<img src="night/img/information.png" />
-					</div>
 				</div>
 				<div id="mount_parameters">
 					<div class="modal hide fade" id="CatalogModal">
@@ -237,7 +246,8 @@
 										| i18n}}</td>
 									<td height="20px" class="catalog_title">{{'night.mount.catalog.uranus'
 										| i18n}}</td>
-									<td height="20px" class="catalog_title"></td>
+									<td height="20px" class="catalog_title">{{'night.mount.catalog.skymap'
+										| i18n}}</td>
 								</tr>
 								<tr>
 									<td height="20px"><div
@@ -261,7 +271,13 @@
 												src="night/img/catalog/uranus.jpg"
 												height="100px" />
 										</div></td>
-									<td height="20px"></td>
+									<td height="20px">
+										<div class="action_component" style="text-align:center">
+											<a href="http://www.fourmilab.ch/cgi-bin/Yoursky?date=0&utc=1998%2F02%2F06+12%3A42%3A40&jd=2450851.02963&lat={{latitude}}&ns={{latitudeSign}}&lon={{longitude}}&ew={{longitudeSign}}&moonp=on&deep=on&deepm=6.5&consto=on&constn=on&limag=5.5&starnm=2.0&starbm=2.5&imgsize=900&fontscale=1.0&scheme=3&elements=" target="_blank">
+												<img src="night/img/catalog/skymap.jpg"	height="100px" />
+											</a>
+										</div>
+									</td>
 									
 								</tr>
 							</table>
@@ -355,7 +371,7 @@
 							<td>
 							
 								<div id="coordinates_button" class="action_component" style="position:absolute;top:10px;right:-30px"
-										data-content="{{'night.tutorial.step3' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>3 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-content="{{'night.tutorial.step3' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>3 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
 										data-animation="yes"
 										data-trigger="manual"
 										data-placement="right"
@@ -375,7 +391,7 @@
 						<tr>
 							<td>
 								<div id="tags_tutorial"
-										data-content="{{'night.tutorial.step4' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>4 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-content="{{'night.tutorial.step4' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>4 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
 										data-animation="yes"
 										data-trigger="manual"
 										data-placement="left"
@@ -389,7 +405,7 @@
 							</td>
 							<td>
 								<div id="catalog_button" class="action_component" style="position:absolute;top:45px;right:-35px"
-										data-content="{{'night.tutorial.step5' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>5 / 12</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+										data-content="{{'night.tutorial.step5' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>5 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
 										data-animation="yes"
 										data-trigger="manual"
 										data-placement="right"
@@ -408,7 +424,14 @@
 					<span id="mount_status" class="status_text">{{status_mount |
 						i18n}}</span>
 					</div>
-					<div id="mount_buttons_panel" style="position:absolute;bottom:-20px;right:0px">
+					<div id="mount_buttons_panel" style="position:absolute;bottom:-20px;right:0px"
+							data-content="{{'night.tutorial.step6' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>6 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+							data-animation="yes"
+							data-trigger="manual"
+							data-placement="right"
+							data-show="500"
+							data-html="true"
+							data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#mount_buttons_panel').popover('hide');&quot;>&times;</button>">									
 						<img src="night/img/telescope.png"
 							width="40px" height="40px" ng-click="go()"
 							tooltip="Move telescope" />
@@ -463,22 +486,33 @@
 					ng-style="{'opacity': ccd_alarm ? 1 : 0.1}"
 					class="badge badge-important">0</span>
 
-				<div id="ccd_information" style="float: right;">
-					<img src="night/img/information.png" />
-				</div>
 			</div>
 			<div id="main_ccd_parameters" ng-model="isExposing"
 				ng-init="isExposing=false">
 
-				<div tooltip="{{'night.ccd.tooltip.exposure_time' | i18n}}">
-					<div id="exposure_slider" style="width:80px;"></div>
-					<div id="exposure_time_div" style="position:absolute;top:-6px;right:40px;width:0px;">
+				<div>
+					<div id="exposure_slider" style="width:80px;" tooltip="{{'night.ccd.tooltip.exposure_time' | i18n}}"></div>
+					<div id="exposure_time_div" style="position:absolute;top:-6px;right:40px;width:0px;"
+							data-content="{{'night.tutorial.step10' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>10 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+							data-animation="yes"
+							data-trigger="manual"
+							data-placement="top"
+							data-show="500"
+							data-html="true"
+							data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#exposure_time_div').popover('hide');&quot;>&times;</button>">									
 						<input type="text" id="exposure_time" ng-disabled="!hasExposition[ccd_order]" ng-blur="check_exposure_time()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
 					</div>
 				</div>
-				<div tooltip="{{'night.ccd.tooltip.gain' | i18n}}" ng-show="hasGain[ccd_order]" style="margin-top:20px;">
-					<div id="gain_slider" style="width:80px;"></div>
-					<div id="gain_div" style="position:absolute;top:20px;right:-5px">
+				<div ng-show="hasGain[ccd_order]" style="margin-top:20px;">
+					<div id="gain_slider" style="width:80px;" tooltip="{{'night.ccd.tooltip.gain' | i18n}}"></div>
+					<div id="gain_div" style="position:absolute;top:20px;right:-5px"
+							data-content="{{'night.tutorial.step11' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>11 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+							data-animation="yes"
+							data-trigger="manual"
+							data-placement="top"
+							data-show="500"
+							data-html="true"
+							data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#gain_div').popover('hide');&quot;>&times;</button>">																
 						<input type="text" id="gain" ng-blur="check_gain()" style="width:30px;font-size:10px;font-weight:bold;height:10px;margin:0px;"></input>
 					</div>
 				</div>
@@ -486,7 +520,14 @@
 					<select id="filter_selector" class="selector"
 							ng-model="filter" ng-change="setFilter()"
 							ng-disabled="!hasFilterWheel[ccd_order]"
-							ng-options="item for item in filters_0">
+							ng-options="item for item in filters_0"
+							data-content="{{'night.tutorial.step9' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>9 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+							data-animation="yes"
+							data-trigger="manual"
+							data-placement="right"
+							data-show="500"
+							data-html="true"
+							data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#filter_selector').popover('hide');&quot;>&times;</button>">																
 					</select>
 				</div>
 		
@@ -498,33 +539,51 @@
 				</div>
 				<div id="main_ccd_buttons_panel" style="position:absolute;top:100px;width:85px;" align="center">
 					<div style="display:inline"
-						ng-class="hasVideoMode[ccd_order] ? (isExposing && 'ccd_button_disabled' || (isVideo && 'ccd_button_selected' || 'ccd_button')) : 'ccd_button_disabled'"
-						ng-click="hasVideoMode[ccd_order] && !isExposing && video()">
+						ng-class="hasVideoMode[0] ? (isExposing && 'ccd_button_disabled' || (isVideo && 'ccd_button_selected' || 'ccd_button')) : 'ccd_button_disabled'"
+						ng-click="hasVideoMode[0] && !isExposing && video()">
 						<img src="night/img/video.png" width="40px" height="40px" 
 								tooltip="{{'night.ccd.messages.video_text' | i18n}}" />
 					</div>
-					<div id="exposure_button" style="display:inline"
+					<div id="exposure_button" style="position:relative;top:-70px;left:-120px"
 						ng-class="isExposing ? 'ccd_button_selected' : 'ccd_button'"
-						ng-click="!isExposing && expose()">
-						<img src="night/img/ccd.png" width="30px" height="30px" 
+						ng-click="!isExposing && expose()"
+						data-content="{{'night.tutorial.step12' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>12 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+						data-animation="yes"
+						data-trigger="manual"
+						data-placement="right"
+						data-show="500"
+						data-html="true"
+						data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#exposure_button').popover('hide');&quot;>&times;</button>">																
+						<img src="night/img/ccd.png" width="60px" height="60px" 
 								tooltip="{{'night.ccd.messages.expose_text' | i18n}}" />
 					</div>	
 				</div>
 			</div>
-			<div id="ccd_button_1"
-				ng-class="hasCcd[1] ? ((ccd_order == 1) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
-				ng-click="hasCcd[1] && setOrder(1)"
-				style="position: absolute; width: 40px; left: -600px;top:120px"
-				tooltip="{{'night.ccd.messages.secondary_ccd' | i18n}}">
+			<div id="ccd_button"
+				class="action_component"
+				ng-show="hasCcd[1]"
+				ng-click="setOrder()"
+				style="position: absolute; width: 54px; top: 120px; left: -600px"
+				data-content="{{'night.tutorial.step8' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>8 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+				data-animation="yes"
+				data-trigger="manual"
+				data-placement="right"
+				data-show="500"
+				data-html="true"
+				data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#ccd_button').popover('hide');&quot;>&times;</button>">
 				<img src="night/img/eye.png" />
 			</div>
-			<div id="ccd_button_0"
-				ng-class="hasCcd[0] ? ((ccd_order == 0) && 'ccd_button_selected' || 'ccd_button') : 'ccd_button_disabled'"
-				ng-click="hasCcd[0] && setOrder(0)"
-				style="position: absolute; width: 54px; top: 120px; left: -100px"
-				tooltip="{{'night.ccd.messages.main_ccd' | i18n}}">
-				<img src="night/img/eye.png" />
-			</div>
+				<div id="ccd_button_message"
+						style="position: absolute; width: 54px; top: 120px; left: -600px"
+						ng-class="!hasCcd[1] ? ccd_button_disabled" 
+						data-content="{{'night.ccd.messages.info_change_ccd' | i18n}}"
+						data-animation="yes"
+						data-trigger="manual"
+						data-placement="top"
+						data-show="500"
+						data-html="true"
+						data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#ccd_button_message').popover('hide');&quot;>&times;</button>">													
+				</div>
 		</div>
 	</div>
 
@@ -538,7 +597,14 @@
 
 	<div ng-controller="SolarImagesCtrl" class="span9"
 		style="height: 100px; cursor: default;position:absolute;top:950px">
-		<div align="center">
+		<div align="center" id="album_title"
+			data-content="{{'night.tutorial.step13' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>13 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
+			data-animation="yes"
+			data-trigger="manual"
+			data-placement="top"
+			data-show="500"
+			data-html="true"
+			data-title="<strong><i class=&quot;icon-large icon-info-sign&quot;></i></strong><button type=&quot;button&quot; class=&quot;close close_tutorial&quot; onclick=&quot;$('#album_title').popover('hide');&quot;>&times;</button>">																		
 			<h5 class="label-info title_night" style="margin-top: 0px">Álbum</h5>
 		</div>
 		<div id="album_panel"
@@ -591,14 +657,17 @@
    			 		</script>
 		</div>
 				
-			<div class="modal hide fade" id="TutorialModal">
+			<div class="modal hide fade" id="TutorialModal" style="width:740px">
 				<div class="modal-header">
 					<h3>{{'night.general.information' | i18n}}</h3>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="background-color:white;height:700px">
+				<!-- 
 					<center>
 						<object width="420" height="315"><param name="movie" value="//www.youtube.com/v/DqOHZB1hsuM?version=3&amp;hl=en_US&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/DqOHZB1hsuM?version=3&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
 					</center>
+					 -->
+					 <iframe width="700px" height="600px" src="http://www.fourmilab.ch/cgi-bin/Yoursky?date=0&utc=1998%2F02%2F06+12%3A42%3A40&jd=2450851.02963&lat=37.261&ns=North&lon=6.945&ew=West&coords=on&moonp=on&deep=on&deepm=10&consto=on&constn=on&constb=on&limag=5.5&starn=on&starnm=2.0&starb=on&starbm=2.5&imgsize=640&fontscale=1.0&scheme=0&elements="></iframe>
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-warning" data-dismiss="modal"
@@ -607,60 +676,7 @@
 			</div>
 		
 	</div>
-<!-- 
-<div style="position:absolute;top:250px;left:1000px">
-	<a href="https://github.com/esgg/GLORIANightExperiment" target="_blank">
-		<img src="night/img/construction-small.jpg">
-	</a>
-</div>
- -->
-<!-- 
-<div id="infRa" style="visibility:hidden">{{'night.mount.messages.info_ra' | i18n}}</div>
-<div id="infDec" style="visibility:hidden">{{'night.mount.messages.info_dec' | i18n}}</div>
-<div id="infTarget" style="visibility:hidden">{{'night.mount.messages.info_target' | i18n}}</div>
-<div id="infTime" style="visibility:hidden">{{'night.ccd.messages.info_exposition' | i18n}}</div>
-<div id="infFilter" style="visibility:hidden">{{'night.ccd.messages.info_filter' | i18n}}</div>
-<div id="infGain" style="visibility:hidden">{{'night.ccd.messages.info_gain' | i18n}}</div>
-
-<div id="tutStep1" style="visibility:hidden">{{'night.tutorial.step1' | i18n}}</div>
-<div id="tutStep2" style="visibility:hidden">{{'night.tutorial.step2' | i18n}}</div>
-<div id="tutStep3" style="visibility:hidden">{{'night.tutorial.step3' | i18n}}</div>
-<div id="tutStep4" style="visibility:hidden">{{'night.tutorial.step4' | i18n}}</div>
-<div id="tutStep5" style="visibility:hidden">{{'night.tutorial.step5' | i18n}}</div>
-<div id="tutStep6" style="visibility:hidden">{{'night.tutorial.step6' | i18n}}</div>
-<div id="tutStep7" style="visibility:hidden">{{'night.tutorial.step7' | i18n}}</div>
-<div id="tutStep8" style="visibility:hidden">{{'night.tutorial.step8' | i18n}}</div>
-<div id="tutStep9" style="visibility:hidden">{{'night.tutorial.step9' | i18n}}</div>
-<div id="tutStep10" style="visibility:hidden">{{'night.tutorial.step10' | i18n}}</div>
-<div id="tutStep11" style="visibility:hidden">{{'night.tutorial.step11' | i18n}}</div>
-<div id="tutStep12" style="visibility:hidden">{{'night.tutorial.step12' | i18n}}</div>
-<div id="tutStep12" style="visibility:hidden">{{'night.tutorial.step13' | i18n}}</div>
- -->
 <script>
-	
-	 /*
-	 var raTip = new Opentip("#ccd_information",{target:"#ra_coordinates", tipJoint:"bottom left"});
-	 var decTip = new Opentip("#ccd_information",{target:"#dec_coordinates", tipJoint:"bottom right"});
-	 var tags = new Opentip("#ccd_information",{target:"#tags", tipJoint:"top left"});
-	 var timeTip = new Opentip("#ccd_information",{target:"#exposure_time", tipJoint:"bottom left"});
-	 var filterTip = new Opentip("#ccd_information",{target:"#filter_selector", tipJoint:"right"});
-	 var gainTip = new Opentip("#ccd_information", {target:"#gain", tipJoint:"left"});
-	 */
-	 /*
-	 var step1 = new Opentip("#mount_information",{target:"#scam0_name", tipJoint:"bottom right"});
-	 var step2 = new Opentip("#mount_information",{target:"#timer_minutes", tipJoint:"top left"});
-	 var step3 = new Opentip("#mount_information",{target:"#coordinates_button", tipJoint:"bottom left"});
-	 var step4 = new Opentip("#mount_information",{target:"#tags", tipJoint:"bottom right"});
-	 var step5 = new Opentip("#mount_information",{target:"#catalog_button", tipJoint:"left"});
-	 var step6 = new Opentip("#mount_information",{target:"#mount_buttons_panel", tipJoint:"bottom right"});
-	 var step7 = new Opentip("#mount_information",{target:"#focus_marker", tipJoint:"bottom left"});
-	 var step8 = new Opentip("#mount_information",{target:"#ccd_button_0", tipJoint:"right"});
-	 var step9 = new Opentip("#mount_information",{target:"#filter_selector", tipJoint:"bottom right"});
-	 var step10 = new Opentip("#mount_information",{target:"#exposure_slider", tipJoint:"bottom right"});
-	 var step11 = new Opentip("#mount_information",{target:"#gain_div", tipJoint:"bottom left"});
-	 var step12 = new Opentip("#mount_information",{target:"#exposure_button", tipJoint:"bottom left"});
-	 var step13 = new Opentip("#mount_information",{target:"#album_panel", tipJoint:"bottom left"});
-	 */
 	 
 	 var gainChange = false;
 	 
@@ -707,27 +723,49 @@
 		}
 	});
 	
-	var tutorial_step = 2;
+	var tutorial_step = 1;
+	var tutorial_filter_wheel = false;
+	var tutorial_gain = false;
+	var tutorial_hasCcds = false;
 	
 	function nextTutorial(){
-		if (tutorial_step<5){
+		if (tutorial_step<13){
 			hideTutorial();
 			tutorial_step++;
+			if ((tutorial_step == 8) && (!tutorial_hasCcds)){
+				tutorial_step++;	
+			}
+			if ((tutorial_step == 9) && (!tutorial_filter_wheel)){
+				tutorial_step++;	
+			}
+			if ((tutorial_step == 11) && (!tutorial_gain)){
+				tutorial_step++;
+			}
 			showTutorial();
 		}
 	}
 	
 	function prevTutorial(){
-		if (tutorial_step>2){
+		if (tutorial_step>1){
 			hideTutorial();
 			tutorial_step--;
+			if ((tutorial_step == 11) && (!tutorial_gain)){
+				tutorial_step--;
+			}
+			if ((tutorial_step == 9) && (!tutorial_filter_wheel)){
+				tutorial_step--;
+			}
+			if ((tutorial_step == 8) && (!tutorial_hasCcds)){
+				tutorial_step--;	
+			}
 			showTutorial();					
 		}
 	}
 	
 	function showTutorial(){
-		//alert(tutorial_step);
-		if (tutorial_step == 2){
+		if (tutorial_step == 1){
+			$('#tutorial_surveillance').popover('show')
+		} else if (tutorial_step == 2){
 			$("#step2_panel").popover('show');
 		} else if (tutorial_step == 3){
 			$("#coordinates_button").popover('show');
@@ -735,11 +773,29 @@
 			$("#tags_tutorial").popover('show');
 		} else if (tutorial_step ==5){
 			$("#catalog_button").popover('show');
-		}
+		} else if (tutorial_step == 6){
+			$("#mount_buttons_panel").popover('show');
+		} else if (tutorial_step == 7){
+			$("#focus_marker").popover('show');
+		} else if (tutorial_step == 8){
+			$('#ccd_button').popover('show');
+		} else if (tutorial_step == 9){
+			$('#filter_selector').popover('show');
+		} else if (tutorial_step == 10){
+			$('#exposure_time_div').popover('show')
+		} else if (tutorial_step == 11){
+			$('#gain_div').popover('show');
+		} else if (tutorial_step == 12){
+			$('#exposure_button').popover('show');
+		} else if (tutorial_step == 13){
+			$('#album_title').popover('show');
+		}	
 	}
 	
 	function hideTutorial(){
-		if (tutorial_step == 2){
+		if (tutorial_step == 1){
+			$('#tutorial_surveillance').popover('hide')
+		} else if (tutorial_step == 2){
 			$("#step2_panel").popover('hide');
 		} else if (tutorial_step == 3){
 			$("#coordinates_button").popover('hide');
@@ -747,6 +803,22 @@
 			$("#tags_tutorial").popover('hide');
 		} else if (tutorial_step == 5){
 			$("#catalog_button").popover('hide');
+		} else if (tutorial_step == 6){
+			$("#mount_buttons_panel").popover('hide');
+		} else if (tutorial_step == 7){
+			$("#focus_marker").popover('hide');
+		} else if (tutorial_step == 8){
+			$('#ccd_button').popover('hide');
+		} else if (tutorial_step == 9){
+			$('#filter_selector').popover('hide');
+		} else if (tutorial_step == 10){
+			$('#exposure_time_div').popover('hide')
+		} else if (tutorial_step == 11){
+			$('#gain_div').popover('hide');
+		} else if (tutorial_step == 12){
+			$('#exposure_button').popover('hide');
+		} else if (tutorial_step == 13){
+			$('#album_title').popover('hide');
 		}		
 	}
 </script>
