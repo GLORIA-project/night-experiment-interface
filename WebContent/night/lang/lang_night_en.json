@@ -15,23 +15,23 @@
         "rating": "What is your opinion about the experiment?",
         "questionnaire":"http://goo.gl/Th8nmI",
         "send": "Send",
-        "video_tutorials":"Tutorials",
-        "video_tutorials_tooltip": "Video Tutorials"
+        "video_tutorials":"INFO",
+        "video_tutorials_tooltip": "Info"
     },
     "tutorial": {
-    	"step1":"Enlarge the webcam images by moving the pointer over them, to get to see the telescope movement.",
+    	"step1":"Enlarge the webcam images by moving the pointer over them, to see the telescope movement.",
     	"step2":"Remaining Time of observation",
-    	"step3":"Search objects by their absolute equatorial Coordinates.",
-    	"step4":"Search objects by their names: M13, NGC5194,...",
-    	"step5":"Search Planets",
-    	"step6":"Step 6: Slew telescope Icon",
-    	"step7":"Step 7: Images Focuser",
-    	"step8":"Step 8: CCD Camera selector",
-    	"step9":"Step 9: Filter selector",
-    	"step10": "Step 10: Exposure Time selector in seconds",
-    	"step11": "Step 11: Camera Gain selector",
-    	"step12": "Step 12: Click here to take an image",
-    	"step13": "Step 13: Click in a snapshot to enlarge it. You can download it in JPG and FITS"
+    	"step3":"Find objects by their absolute equatorial Coordinates.",
+    	"step4":"Find objects by their names: M13, NGC5194,...",
+    	"step5":"Find Planets",
+    	"step6":"Slew telescope Icon",
+    	"step7":"Images Focuser",
+    	"step8":"CCD Camera selector",
+    	"step9":"Filter selector",
+    	"step10": "Exposure Time selector in seconds",
+    	"step11": "Camera Gain selector",
+    	"step12": "Click here to take an image",
+    	"step13": "Click in a snapshot to enlarge it. You can download it in JPG and FITS"
     			},
 	"focuser": {
 				"tooltip":"Click here to change the focuser position"
@@ -43,6 +43,7 @@
 				"object":"TARGET",
 				"apply" : "Apply",
 				"close" : "Close",
+				"sky" : "Sky",
 				"information": "You can move the telescope introducing the RADEC coordinates (first and second box) or the target name (third box)",
 				"messages": {
 					"ra_text": "Right Ascension Coordinate",
@@ -68,7 +69,8 @@
 					"saturn": "SATURN",
 					"neptune": "NEPTUNE",
 					"uranus": "URANUS",
-					"moon":"MOON"
+					"moon":"MOON",
+					"skymap": "SKYMAP"
 				},
 				"status": {
 					"ready":"READY",
@@ -116,7 +118,8 @@
 					"info_gain":"Put here the gain. Format: [0-1023]",
 					"alarm_exposure": "Impossible to set exposure time, try again",
 					"alarm_gain": "Impossible to set gain, try again",
-					"alarm_url": "Impossible to generate image"
+					"alarm_url": "Impossible to generate image",
+					"info_change_ccd": "New CCD selected"
 				},
 				"tooltip":{
 					"exposure_time": "Exposure time in seconds",

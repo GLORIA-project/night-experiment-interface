@@ -14,22 +14,24 @@
         "nvalid": "The reservation id @{p1}@ is not valid",
         "rating": "What is your opinion about the experiment?",
         "questionnaire":"http://goo.gl/Th8nmI",
-        "send": "Send"
+        "send": "Send",
+        "video_tutorials":"INFO",
+        "video_tutorials_tooltip": "Info"
     },
-     "tutorial": {
-    	"step1":"Step 1: Enlarge the webcam images by moving the pointer over them, to get to see the telescope movement.",
-    	"step2":"Step 2: Remaining Time of observation",
-    	"step3":"Step 3: Search objects by their absolute equatorial Coordinates.",
-    	"step4":"Step 4: Search objects by their names: M13, NGC5194,...",
-    	"step5":"Step 5: Search Planets",
-    	"step6":"Step 6: Slew telescope Icon",
-    	"step7":"Step 7: Images Focuser",
-    	"step8":"Step 8: CCD Camera selector",
-    	"step9":"Step 9: Filter selector",
-    	"step10": "Step 10: Exposure Time selector in seconds",
-    	"step11": "Step 11: Camera Gain selector",
-    	"step12": "Step 12: Click here to take an image",
-    	"step13": "Step 13: Click in a snapshot to enlarge it. You can download it in JPG and FITS"
+    "tutorial": {
+    	"step1":"Enlarge the webcam images by moving the pointer over them, to see the telescope movement.",
+    	"step2":"Remaining Time of observation",
+    	"step3":"Find objects by their absolute equatorial Coordinates.",
+    	"step4":"Find objects by their names: M13, NGC5194,...",
+    	"step5":"Find Planets",
+    	"step6":"Slew telescope Icon",
+    	"step7":"Images Focuser",
+    	"step8":"CCD Camera selector",
+    	"step9":"Filter selector",
+    	"step10": "Exposure Time selector in seconds",
+    	"step11": "Camera Gain selector",
+    	"step12": "Click here to take an image",
+    	"step13": "Click in a snapshot to enlarge it. You can download it in JPG and FITS"
     			},
 	"focuser": {
 				"tooltip":"Click here to change the focuser position"
@@ -41,6 +43,7 @@
 				"object":"TARGET",
 				"apply" : "Apply",
 				"close" : "Close",
+				"sky" : "Sky",
 				"information": "You can move the telescope introducing the RADEC coordinates (first and second box) or the target name (third box)",
 				"messages": {
 					"ra_text": "Right Ascension Coordinate",
@@ -54,7 +57,8 @@
 					"alarm_status": "Problem to load mount status",
 					"info_ra" : "Put here the right ascension coordinate. Format:[0-23]:[0-59]:[0:59]. If you want to know more, click here",
 					"info_dec": "Put here the declination coordinate. Format: [-90 - 90]:[0 - 59]: [0 - 59].",
-					"info_target": "In this field, you can choose between object from messier catalog (M1, M2, etc ...), international(NGC500, etc ...) or solar system (JUPITER, SATURN, etc ...)"
+					"info_target": "In this field, you can choose between object from messier catalog (M1, M2, etc ...), international(NGC500, etc ...) or solar system (JUPITER, SATURN, etc ...)",
+					"invalid_rah": "Invalid RA value"
 				},
 				"catalog": {
 					"solar_tab": "SOLAR SYSTEM",
@@ -65,7 +69,8 @@
 					"saturn": "SATURN",
 					"neptune": "NEPTUNE",
 					"uranus": "URANUS",
-					"moon":"MOON"
+					"moon":"MOON",
+					"skymap": "SKY MAP"
 				},
 				"status": {
 					"ready":"READY",
@@ -110,7 +115,11 @@
 					"ra_alert": "Wrong ra value",
 					"info_exposition":"Select the exposure time in seconds (max. 120 seconds). The exposure time indicates the time the shutter is open.",
 					"info_filter":"Select the filter.",
-					"info_gain":"Put here the gain. Format: [0-1023]"
+					"info_gain":"Put here the gain. Format: [0-1023]",
+					"alarm_exposure": "Impossible to set exposure time, try again",
+					"alarm_gain": "Impossible to set gain, try again",
+					"alarm_url": "Impossible to generate image",
+					"info_change_ccd": "New CCD selected"
 				},
 				"tooltip":{
 					"exposure_time": "Exposure time in seconds",
@@ -123,7 +132,8 @@
 	},
 	"general": {
 		"alert":"Alert",
-		"expiration_time": "Your reservation time is close to expire"
+		"expiration_time": "Your reservation time is close to expire",
+		"information": "Tutorial"
 	},
 	"album":{
 		"taken":"You took this image at"
@@ -132,11 +142,16 @@
 		"send_image":"See my new astronomical image"
 	},
 	"coordinates_modal": {
-		"title": "Ventana de coordenadas",
-		"introduction": "Especifica las coordenadas del target al que quieres apuntar. Recuerda que las coordenadas deben estar en J2000",
-		"right_ascension": "Ascensión recta",
+		"title": "Coordinates",
+		"introduction": "Enter the target coordinates in J2000. Format:",
+		"ra_info": "Right ascension: Ranging from 00:00:00 to 23:59:59.9",
+		"dec_info": "Declination: Ranging from -90:00:00 to 90:00:00",
+		"right_ascension": "Right Ascension",
 		"declination": "Declination",
 		"invalid_ra": "Invalid Right Ascension coordinate",
 		"invalid_dec": "Invalid Declination coordinate"
+	},
+	"ques": {
+		"q1": "What the fuck?"
 	}
 }
