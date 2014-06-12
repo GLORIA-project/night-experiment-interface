@@ -68,7 +68,16 @@ function NightMainCtrl($gloriaAPI, $scope, $timeout, $gloriaLocale,
 	};
 
 	$scope.activateTutorial = function(){
-		$("#TutorialModal").modal();
+		//$("#TutorialModal").modal();
+		if ($scope.tutorial_activated){
+			hideTutorial();
+			$scope.tutorial_activated = false;
+		} else {
+			tutorial_step = 1;
+			showTutorial();
+			$scope.tutorial_activated = true;
+		}
+		
 	};
 	
 	$scope.onUnauth = function() {
