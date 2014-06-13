@@ -634,7 +634,7 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 	$scope.minGain = [260,260];
 	$scope.maxGain = [1023,1023];
 	
-	$scope.hasExposition = [false,false];
+	$scope.hasExposition = [true,true];
 	$scope.maxExposition = [120,120];
 	
 	//$scope.hasCcd[0] = true;
