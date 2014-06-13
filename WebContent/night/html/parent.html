@@ -41,10 +41,13 @@
 	<div ng-if="reservationEnd" class="alert alert-g"
 		style="width: 50%; margin-left: 25%; margin-top: 20px">
 		{{'night.reservation.end'|i18n}}</div>
-	<div ng-if="reservationEnd" style="margin-left:25%;height:100%">
+	<div ng-if="reservationEnd" style="text-align:center;height:100%">
 		<!-- <iframe id="questionnaire" ng-src="{{nightQuestions}}" style="width:100%;height:100%"></iframe> -->
-		<a href="https://docs.google.com/forms/d/1zFZexlvF_otlNyMCZDKXa84Ga8iodXjRm0MxLLuARlM/viewform" target="_blank"><h3>Help us filling this questionnaire. Click here.</h3></a><br>
-		<a href="https://docs.google.com/forms/d/1ys1b8EiC8COj8oBQtFQWuCE3f_J1ljZUojpVGm0TOUk/viewform" target="_blank"><h3>Ayúdanos rellenando este cuestionario. Pincha aquí</h3></a>		
+		<br><br><br>
+		<h3><span style="color:#FFB545">Help us filling this QUESTIONNAIRE. Click  </span>
+		<a href="https://docs.google.com/forms/d/1zFZexlvF_otlNyMCZDKXa84Ga8iodXjRm0MxLLuARlM/viewform" target="_blank"><span style="color:#00FFFF"><u>HERE</u></span></h3></a>
+		<h3><span style="color:#FFB545">Ayúdanos rellenando este CUESTIONARIO. Pincha  </span>
+		<a href="https://docs.google.com/forms/d/1ys1b8EiC8COj8oBQtFQWuCE3f_J1ljZUojpVGm0TOUk/viewform" target="_blank"><span style="color:#00FFFF"><u>AQUÍ</u></span></h3></a>		
 	</div>
 	<div class="animate-show alert alert-g" ng-if="notAuthorized"
 		style="width: 40%; margin-left: 30%; margin-top: 20px">
