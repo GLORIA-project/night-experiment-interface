@@ -855,7 +855,7 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 	};
 	
 	$scope.setOrder = function(){
-		console.log("Changing ccd order");
+		console.log("Changing CCD order");
 		var order = $scope.ccd_order;
 		if ($scope.ccd_order == 0){
 			order = 1;
@@ -880,13 +880,13 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 						console.log("Alcance"+$scope.hasGain[0]);
 						if (success){
 							
-							//$("#gain_slider").slider({value: $scope.gain, disabled:false});
+							$("#gain_slider").slider({value: $scope.gain});
 							$scope.hasGain[$scope.ccd_order] = true;
 							tutorial_gain = true;
 							$("#gain").val($scope.gain);
 						} else {
 							
-							//$("#gain_slider").slider({value: $scope.gain, disabled:true});
+							//$("#gain_slider").slider({value: $scope.gain});
 							$scope.hasGain[$scope.ccd_order] = false;
 							tutorial_gain = false;
 							$("#gain").val($scope.gain);
