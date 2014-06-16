@@ -119,7 +119,7 @@
 					"alarm_exposure": "Impossible to set exposure time, try again",
 					"alarm_gain": "Impossible to set gain, try again",
 					"alarm_url": "Impossible to generate image",
-					"info_change_ccd": "New CCD selected"
+					"info_change_ccd": "CCD changed"
 				},
 				"tooltip":{
 					"exposure_time": "Exposure time in seconds",
