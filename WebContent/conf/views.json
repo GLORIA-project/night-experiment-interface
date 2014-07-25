@@ -9,7 +9,8 @@
 			"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
 			"night/js/main.js",
 			"night/js/night.js",
-			"night/js/opentip/downloads/opentip-jquery.min.js"
+			"night/js/opentip/downloads/opentip-jquery.min.js",
+			"http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"
 		]
 	},
 	"wrong": {
