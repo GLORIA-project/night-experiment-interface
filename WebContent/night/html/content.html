@@ -11,10 +11,10 @@
 </div>
 <div id="container" ng-controller="InitDevices"
 	style="background-image: url(night/img/Template.png); background-size: 940px 744px; background-repeat: no-repeat; height:744px">
-	<div ng-controller="FocuserCtrl"
-		ng-init="focuserPressed=false;currentFocuserPosition=0">
+	<div ng-controller="FocuserCtrl" 
+		ng-init="focuserPressed=false;currentFocuserPosition=0;hasFocuser=false">
 		<div id="focus_marker" tooltip="{{'night.focuser.tooltip' | i18n}}"
-			ng-mousedown="activate_focuser()"
+			ng-mousedown="hasFocuser && activate_focuser()"
 			data-content="{{'night.tutorial.step7' | i18n}}<hr class=&quot;tutorial_line&quot;><div style=&quot;text-align:center&quot;><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;prevTutorial()&quot;><i class=&quot;icon-large icon-step-backward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button><span style=&quot;font-size:1.4em;&quot>7 / 13</span><button type=&quot;button&quot; class=&quot;title_tutorial next_button&quot; onclick=&quot;nextTutorial()&quot;><i class=&quot;icon-large icon-step-forward icon-white&quot; style=&quot;vertical-align:baseline&quot;></i></button></div>"
 			data-animation="yes"
 			data-trigger="manual"

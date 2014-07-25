@@ -88,19 +88,18 @@ function FocuserCtrl($gloriaAPI, $scope){
 	
 	$scope.$watch('rid', function(){
 		//Calculate range of the focuser
-		$gloriaAPI.executeOperation($scope.rid,'get_focuser_range', function(success){
-			
-		}, function(error){
-			
-		});
-		//Read the initial position of the focuser
-		$gloriaAPI.getParameterTreeValue($scope.rid,'focuser','position',function(success){
+//		$gloriaAPI.executeOperation($scope.rid,'get_focuser_range', function(success){
+//			
+//		}, function(error){
+//			
+//		});
+		$gloriaAPI.getParameterTreeValue($scope.rid,'focuser','pos',function(success){
 			console.log("Initial position:"+success);
 			if (success != ""){
 				$( "#focuserPosition" ).text(success);
 				$("#focuser_slider").slider("value",success );
 				$scope.currentFocuserPosition = success;
-				
+
 				var angle = (success*18)/100;
 			     var rotate = 'rotate(' +angle + 'deg)';
 			     $('#focus_marker').css({'-moz-transform': rotate, 'transform' : rotate, '-webkit-transform': rotate, '-ms-transform': rotate});
@@ -108,6 +107,27 @@ function FocuserCtrl($gloriaAPI, $scope){
 		}, function(dataError,statusError){
 			//alert(statusError);
 		});
+		$gloriaAPI.executeOperation($scope.rid,'get_focuser_values', function(success){
+			
+		}, function(error){
+			
+		});
+		$gloriaAPI.executeOperation($scope.rid,'get_focuser_position', function(success){
+			//Read the initial position of the focuser
+			$gloriaAPI.getParameterValue($scope.rid,'focuser',function(success){
+				console.log("Initial position:"+success.position);
+				if ((success.position == -1) && (success.range.max == 0) && (success.range.min == 0)){
+					console.log ("Relative focuser");
+					$scope.currentFocuserPosition = 0;
+					$scope.hasFocuser = true;
+				} 
+			}, function(dataError,statusError){
+				//alert(statusError);
+			});
+		}, function(error){
+			
+		});
+		
 	});
 	
 	$scope.activate_focuser = function(){
@@ -123,7 +143,7 @@ function FocuserCtrl($gloriaAPI, $scope){
 		var numSteps = newPositionInt - currentPositionInt;
 
 		$scope.$watch('rid', function(){
-			$gloriaAPI.setParameterTreeValue($scope.rid,'focuser','position',$( "#focuserPosition" ).text(),function(success){
+			$gloriaAPI.setParameterTreeValue($scope.rid,'focuser','pos',$( "#focuserPosition" ).text(),function(success){
 				
 			}, function(error){
 				//TODO Error message
@@ -172,7 +192,7 @@ function GetCamerasCtrl($gloriaAPI, $scope, $timeout){
 				$("#scam0_name").text(success.scam.images[0].name);
 				$("#scam0_img").attr("src",success.scam.images[0].url);
 				
-				if (success.scam.number == 2){
+				if (success.scam.number >= 2){
 					$scope.hasSecondaryWebcam = true;
 					$scope.scam1 = success.scam.images[1].url;
 					$("#scam1_name").text(success.scam.images[1].name);
@@ -1147,10 +1167,10 @@ function convertThetaToCssDegs(theta){
 }
 
 function SetExposureTime($gloriaAPI, data){
-	console.log("Set exposure time:"+$("#exposure_time").text()+" in order "+data.ccd_order);
+	console.log("Set exposure time:"+$("#exposure_time").val()+" in order "+data.ccd_order);
 	return data.ccd_sequence.execute(function() {
 		return $gloriaAPI.setParameterTreeValue(data.requestRid,'cameras','ccd.images.['+data.ccd_order+'].exposure',parseFloat($("#exposure_time").val()),function(success){
-				data.exposure_time = $("#exposure_time").text();
+				data.exposure_time = $("#exposure_time").val();
 			}, function(error){
 				data.isExposing = false;
 				data.ccd_alarm = true;
@@ -1226,7 +1246,7 @@ function CheckInstImages($gloriaAPI, data, $timeout){
 			console.log("ee3"+data.ccd_order);
 			if (success != -1){
 				console.log("Image with id "+success+" generated");
-				console.log("Timer para dentro de:"+parseInt(data.exposure_time*1000));
+				console.log("Timer para dentro de:"+ data.exposure_time);
 				
 				data.timer = $timeout(function() {exposureTimer($gloriaAPI, data, $timeout);}, parseInt(data.exposure_time*1000));
 				
@@ -1256,33 +1276,37 @@ function CheckInstImages($gloriaAPI, data, $timeout){
 function exposureTimer($gloriaAPI, data, $timeout){
 
 	console.log("Paso del timer");
-	data.status_main_ccd = "night.ccd.status.generating";
 	$gloriaAPI.executeOperation(data.requestRid,'load_image_urls',function(success){
 		$gloriaAPI.getParameterTreeValue(data.requestRid,'cameras','ccd.images.['+data.ccd_order+'].inst',function(success){
 			if ((success.jpg!=null) && (success.fits)!=null){
 				data.status_main_ccd = "night.ccd.status.transfering";
 				console.log("Deleting timer");
-				//Send fits url to SADIRA
-				
-				var data_json = {
-						'experimentid' : "night",
-						'experiment':"Default Night Experiment",
-						'reservationid' : data.rid,
-						'url' : success.fits,
-						'user': data.$parent.login.user
-				};
 				
 				
-				var dataJson = new FormData();
-				dataJson.append('json_header', JSON.stringify(data_json));
-				
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', 'http://sadira.iasfbo.inaf.it:9999/gloria/submit', true);
-				xhr.onload = function () {
-				    // do something to response
-				    console.log("Sadira answers : " + this.responseText);
-				};
-				xhr.send(dataJson);
+//				 var hash = CryptoJS.SHA1("password");
+//				    
+//				//Send fits url to SADIRA
+//				
+//				var data_json = {
+//						'experimentid' : "night",
+//						'experiment':"Default Night Experiment",
+//						'reservationid' : data.rid,
+//						'url' : success.fits,
+//						'user': data.$parent.login.user,
+//						'passwd': hash
+//				};
+//				
+//				
+//				var dataJson = new FormData();
+//				dataJson.append('json_header', JSON.stringify(data_json));
+//				
+//				var xhr = new XMLHttpRequest();
+//				xhr.open('POST', 'http://sadira.iasfbo.inaf.it:9999/gloria/submit', true);
+//				xhr.onload = function () {
+//				    // do something to response
+//				    console.log("Sadira answers : " + this.responseText);
+//				};
+//				xhr.send(dataJson);
 				
 				
 				//clearInterval(expTimer);
@@ -1312,7 +1336,7 @@ function exposureTimer($gloriaAPI, data, $timeout){
 					data.isExposing = false;
 				} else {
 					num_ccd_timer--;
-					data.timer = $timeout(function() {exposureTimer($gloriaAPI, data, $timeout);}, 2000);
+					data.timer = $timeout(function() {exposureTimer($gloriaAPI, data, $timeout);}, 4000);
 				}
 
 			}
@@ -1567,20 +1591,11 @@ function TimeReservationCtrl($gloriaAPI, $scope,$timeout, $gloriaLocale){
 			console.log("Queda un minuto");
 			$scope.last_minutes = true;
 			$scope.remainingTimer = $timeout ($scope.onTimeOut, 5000);
-		}, function(response){
-			console.log("Fin de la reserva en response:"+response.status);
-			$scope.$parent.$parent.$parent.reservationEnd = true;
-			/*
-			$("#questionnaire").attr("src","http://www.google.es");
-			console.log("ID:"+$gloriaLocale.getPreferredLanguage());
-			if ($gloriaLocale.id == "es"){
-				$("#questionnaire").attr("src","http://goo.gl/S4PjxS");	
-			} else {
-				$("#questionnaire").attr("src","http://goo.gl/Th8nmI");
-			}
-			*/
-			if (response.status == 406) {
+		}, function(response,status){
+			console.log("Fin de la reserva en response:"+status+" queda de tiempo "+$scope.remainingTimer);
+			if (status == 406) {
 				console.log("Fin de la reserva");
+				$scope.$parent.$parent.$parent.reservationEnd = true;
 			}
 		});
 	};
