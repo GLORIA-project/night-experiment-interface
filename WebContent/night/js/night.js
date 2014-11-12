@@ -1283,30 +1283,31 @@ function exposureTimer($gloriaAPI, data, $timeout){
 				console.log("Deleting timer");
 				
 				
-//				 var hash = CryptoJS.SHA1("password");
-//				    
-//				//Send fits url to SADIRA
-//				
-//				var data_json = {
-//						'experimentid' : "night",
-//						'experiment':"Default Night Experiment",
-//						'reservationid' : data.rid,
-//						'url' : success.fits,
-//						'user': data.$parent.login.user,
-//						'passwd': hash
-//				};
-//				
-//				
-//				var dataJson = new FormData();
-//				dataJson.append('json_header', JSON.stringify(data_json));
-//				
-//				var xhr = new XMLHttpRequest();
-//				xhr.open('POST', 'http://sadira.iasfbo.inaf.it:9999/gloria/submit', true);
-//				xhr.onload = function () {
-//				    // do something to response
-//				    console.log("Sadira answers : " + this.responseText);
-//				};
-//				xhr.send(dataJson);
+				 var hash = CryptoJS.SHA1("password");
+				 console.log('Passwd:'+hash);
+				    
+				//Send fits url to SADIRA
+				
+				var data_json = {
+						'experimentid' : "night",
+						'experiment':"Default Night Experiment",
+						'reservationid' : data.rid,
+						'url' : success.fits,
+						'user': data.$parent.login.user,
+						'passwd': hash
+				};
+				
+				
+				var dataJson = new FormData();
+				dataJson.append('json_header', JSON.stringify(data_json));
+				
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', 'http://sadira.iasfbo.inaf.it:9999/gloria/submit', true);
+				xhr.onload = function () {
+				    // do something to response
+				    console.log("Sadira answers : " + this.responseText);
+				};
+				xhr.send(dataJson);
 				
 				
 				//clearInterval(expTimer);
